@@ -1,0 +1,12 @@
+
+pikolor_update:
+    url: /update.php
+    action: PikolorInterface:update
+
+pikolor_config:
+    url: /config.php
+    action: PikolorInterface:config
+
+pikolor_debugger:
+    url: /engine/get_debug/:debug_id/:action
+    action: PikolorInterface:getDebugger

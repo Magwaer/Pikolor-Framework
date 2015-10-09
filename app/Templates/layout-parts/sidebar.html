@@ -1,0 +1,167 @@
+<!-- BEGIN SIDEBAR -->
+	<div class="page-sidebar-wrapper">
+		<div class="page-sidebar navbar-collapse collapse">
+			<!-- BEGIN SIDEBAR MENU -->
+			<!-- DOC: Apply "page-sidebar-menu-light" class right after "page-sidebar-menu" to enable light sidebar menu style(without borders) -->
+			<!-- DOC: Apply "page-sidebar-menu-hover-submenu" class right after "page-sidebar-menu" to enable hoverable(hover vs accordion) sub menu mode -->
+			<!-- DOC: Apply "page-sidebar-menu-closed" class right after "page-sidebar-menu" to collapse("page-sidebar-closed" class must be applied to the body element) the sidebar sub menu mode -->
+			<!-- DOC: Set data-auto-scroll="false" to disable the sidebar from auto scrolling/focusing -->
+			<!-- DOC: Set data-keep-expand="true" to keep the submenues expanded -->
+			<!-- DOC: Set data-auto-speed="200" to adjust the sub menu slide up/down speed -->
+			<ul class="page-sidebar-menu" data-keep-expanded="false" data-auto-scroll="true" data-slide-speed="200">
+				<!-- DOC: To remove the sidebar toggler from the sidebar you just need to completely remove the below "sidebar-toggler-wrapper" LI element -->
+				<li class="sidebar-toggler-wrapper">
+					<!-- BEGIN SIDEBAR TOGGLER BUTTON -->
+					<div class="sidebar-toggler">
+					</div>
+					<!-- END SIDEBAR TOGGLER BUTTON -->
+				</li>
+				
+				<li class="start {% if page == 'dashboard' %}active{% endif %}">
+					<a href="/dashboard" >
+					<i class="icon-home"></i>
+					<span class="title">
+					Dashboard </span>
+					</a>
+				</li>
+				
+				<li class=" {% if tab == 'telefony'%}active open{% endif %}">
+					<a href="javascript:;">
+					<i class="fa fa-phone "></i>
+					<span class="title">Telephony</span>
+					<span class="selected"></span>
+					<span class="arrow open"></span>
+					</a>
+					<ul class="sub-menu">
+						<li class="{% if page == 'campaigns'%}active{% endif %}">
+							<a href="/campaigns">
+							<i class="fa fa-paper-plane "></i>
+							Campaigns</a>
+						</li>
+						<li class="{% if page == 'inbound'%}active{% endif %}">
+							<a href="/ingroups">
+							<i class="fa  fa-arrow-circle-down "></i>
+							Inbound</a>
+						</li>
+						<li class="{% if page == 'lists'%}active{% endif %}">
+							<a href="/go_list">
+							<i class="fa fa-list "></i>
+							Lists</a>
+						</li>
+						<li class="{% if page == 'moh'%}active{% endif %}">
+							<a href="/moh">
+							<i class="fa  fa-music "></i>
+							Music On Hold</a>
+						</li>
+						<li class="{% if page == 'scripts'%}active{% endif %}">
+							<a href="/scripts">
+							<i class="fa fa-cubes "></i>
+							Scripts</a>
+						</li>
+						<li class="{% if page == 'users'%}active{% endif %}">
+							<a href="/users">
+							<i class="fa fa-user "></i>
+							Users</a>
+						</li>
+						<li class="{% if page == 'voicemails'%}active{% endif %}">
+							<a href="/voicemails">
+							<i class="icon-envelope-open "></i>
+							Voice Files</a>
+						</li>
+					</ul>
+				</li>
+				
+				<li class=" {% if tab == 'agents'%}active open{% endif %}">
+					<a href="javascript:;">
+					<i class="fa fa-users "></i>
+					<span class="title">Agents and Products</span>
+					<span class="arrow "></span>
+					</a>
+					<ul class="sub-menu">
+						<li class="{% if page == 'agents'%}active{% endif %}">
+							<a href="/agents">
+							<i class="fa fa-user"></i>
+							Agents</a>
+						</li>
+						<li class="{% if page == 'agents_groups'%}active{% endif %}">
+							<a href="/agents_groups">
+							<i class="icon-basket"></i>
+							Agents Groups</a>
+						</li>
+						<li class="{% if page == 'products'%}active{% endif %}">
+							<a href="/products">
+							<i class="icon-tag"></i>
+							Products</a>
+						</li>
+						<li class="{% if page == 'appointments'%}active{% endif %}">
+							<a href="/appointments">
+							<i class="icon-handbag"></i>
+							Appointments</a>
+						</li>
+					</ul>
+				</li>
+				
+				<li class=" {% if tab == 'settings'%}active open{% endif %}">
+					<a href="javascript:;">
+					<i class="icon-basket"></i>
+					<span class="title">Admin Settings</span>
+					<span class="arrow "></span>
+					</a>
+					<ul class="sub-menu">
+						<li class="{% if page == 'logs'%}active{% endif %}">
+							<a href="/logs">
+							<i class="icon-home"></i>
+							Admin Log</a>
+						</li>
+						<li class="{% if page == 'calltimes'%}active{% endif %}">
+							<a href="/calltimes">
+							<i class="icon-basket"></i>
+							Call Times</a>
+						</li>
+						<li class="{% if page == 'carriers'%}active{% endif %}">
+							<a href="/carriers">
+							<i class="icon-tag"></i>
+							Carriers</a>
+						</li>
+						<li class="{% if page == 'phones'%}active{% endif %}">
+							<a href="/phones">
+							<i class="icon-handbag"></i>
+							Phones</a>
+						</li>
+						<li class="{% if page == 'servers'%}active{% endif %}">
+							<a href="/servers">
+							<i class="icon-handbag"></i>
+							Servers</a>
+						</li>
+						<li class="{% if page == 'settings'%}active{% endif %}">
+							<a href="/settings">
+							<i class="icon-handbag"></i>
+							System Settings</a>
+						</li>
+						<li class="{% if page == 'usergroups'%}active{% endif %}">
+							<a href="/usergroups">
+							<i class="icon-handbag"></i>
+							User groups</a>
+						</li>
+						<li class="{% if page == 'voicemails'%}active{% endif %}">
+							<a href="/voicemails">
+							<i class="icon-handbag"></i>
+							Voicemails</a>
+						</li>
+					</ul>
+				</li>
+				
+				<!-- BEGIN ANGULARJS LINK -->
+				<li class=" {% if tab == 'reports'%}active{% endif %}">
+					<a href="/reports" >
+					<i class="icon-paper-plane"></i>
+					<span class="title">
+					Reports &amp; Analytics </span>
+					</a>
+				</li>
+
+			</ul>
+			<!-- END SIDEBAR MENU -->
+		</div>
+	</div>
+	<!-- END SIDEBAR -->

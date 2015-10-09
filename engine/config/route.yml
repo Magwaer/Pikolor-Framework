@@ -1,0 +1,4 @@
+
+home:
+    url: /
+    action: OSHome:homepage

@@ -1,0 +1,12 @@
+
+home:
+    url: /
+    action: Home
+
+login:
+    url: /login
+    action: Home:login
+
+logout:
+    url: /logout
+    action: Home:logout
