@@ -68,7 +68,7 @@ class Twig {
 		Twig_Autoloader::register();
 		
 		// init paths
-		$this->template_dir = APP_PATH . "Templates";
+		$this->template_dir = APP_PATH . "templates";
 		$this->cache_dir = ENGINE_PATH . "cache" . DS . "templates";
 		// load environment
 		$loader = new Twig_Loader_Filesystem($this->template_dir, $this->cache_dir);

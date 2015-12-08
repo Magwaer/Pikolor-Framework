@@ -1,0 +1,112 @@
+{% extends "full-page-layout.html" %}
+
+{% block stylesheets %}
+	{{ parent() }}
+	
+        <link href="{{ asset_path }}global/plugins/bootstrap-summernote/summernote.css" rel="stylesheet" type="text/css" />
+        <link href="{{ asset_path }}global/plugins/bootstrap-markdown/css/bootstrap-markdown.min.css" rel="stylesheet" type="text/css" />
+{% endblock %}
+
+{% block content %}
+	<div class="page-content-wrapper">
+		<div class="page-content">
+			<h3 class="page-title">
+				{{ page_title }}
+			</h3>
+			<div class="page-bar">
+				<ul class="page-breadcrumb">
+					<li>
+						<i class="fa fa-home"></i>
+						<a href="/dashboard">Dashboard</a>
+						<i class="fa fa-angle-right"></i>
+					</li>
+					<li>
+						<a href="/projects">Projects</a>
+						<i class="fa fa-angle-right"></i>
+					</li>
+					<li>
+						<a href="#">{{ project.name }}</a>
+					</li>
+				</ul>
+				<div class="page-toolbar">
+					<div class="btn-group pull-right">
+						<button type="button" class="btn btn-fit-height grey-salt dropdown-toggle" dropdown-toggle" data-toggle="dropdown" data-delay="1000" data-close-others="true">
+							{{ 'Actions' }} <i class="fa fa-angle-down"></i>
+						</button>
+						<ul class="dropdown-menu pull-right" role="menu">
+							<li><a href="/projects/task_add/{{ project.id }}">{{ 'Add task' }}</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+			<!-- END PAGE HEADER-->
+			<table class="table table-bordered table-striped ">
+				<thead class="flip-content">
+					<tr>
+						<th width="40px">#</th>
+						<th> Task </th>
+						<th> Developer </th>
+						<th width="150px"> Estimate hours </th>
+						<th width="150px"> Spent hours </th>
+						<th width="100px"> Status </th>
+						<th width="100px"> Options </th>
+					</tr>
+				</thead>
+				<tbody>
+				{% for task in tasks %}
+					<tr style="vertical-align:bottom">
+						<td style="vertical-align:middle"> {{ loop.index }} </td>
+						<td style="vertical-align:middle"> 
+							<a href="/task/{{ task.id }}">{{ task.name }}</a>
+						</td>
+						<td style="vertical-align:middle">
+							{% if task.developer_id %}
+							<a href="/user/{{ task.developer_id }}">{{ task.developer }}</a>
+							{% endif %}
+						</td>
+						<td class="numeric" style="vertical-align:middle">{{ task.estimate ? task.estimate  : 0 }}</td>
+						<td class="numeric" style="vertical-align:middle">{{ task.total_hours ? task.total_hours  : 0 }}</td>
+						<td  style="vertical-align:middle">
+							{% if task.status == 'open' %}
+							<span class="label label-sm label-success">Open</span>
+							{% endif %}
+							{% if task.status == 'closed' %}
+							<span class="label label-sm label-danger">Closed</span>
+							{% endif %}
+							{% if task.status == 'deleted' %}
+							<span class="label label-sm label-default">Deleted</span>
+							{% endif %}
+						</td>
+						<td class="numeric" style="vertical-align:middle">
+							<div class="btn-group pull-right">
+								<button type="button" class="btn btn-sm btn-info dropdown-toggle" data-toggle="dropdown" data-delay="1000" data-close-others="true">
+									{{ 'Actions' }} <i class="fa fa-angle-down"></i>
+								</button>
+								<ul class="dropdown-menu pull-right" role="menu">
+									<li><a href="/projects/task_edit/{{ task.id }}" >{{ 'Edit' }}</a></li>
+									{% if me.role == "admin" %}
+									<li><a href="/projects/task_delete/{{ task.id }}" onclick="return confirm('Are you sure ?')" >{{ 'Remove' }}</a></li>
+									{% endif %}
+								</ul>
+							</div>
+						</td>
+					</tr>
+				{% endfor %}
+				</tbody>
+			</table>
+		</div>
+	</div>
+{% endblock %}
+
+{% block javascript_bottom %}
+	
+	<script>
+		$(function(){
+			$(document).on("click" , "#task_wizzard", function(){
+				$.post($("#task_form").attr('action'), $("#task_form").serialize(), function(){
+					location.reload();
+				})
+			})
+		})
+	</script>
+{% endblock %}

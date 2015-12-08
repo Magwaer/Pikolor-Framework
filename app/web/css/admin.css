@@ -1,0 +1,17 @@
+.lang_switcher{
+	display:table;
+	width:100%;
+}
+.lang_switcher .lang_row{
+	display:table-row;
+	width:100%;
+	vertical-align:top;
+}
+.langs{
+	width:100px !important;
+	display:table-cell;
+	vertical-align:top;
+}
+.lang{
+	display:table-cell;
+}

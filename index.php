@@ -1,14 +1,17 @@
 <?php
-/**
- * Pikolor Engine - by Pikolor
- *
- * @package		Pikolor Custom CMS
- * @author		Buzco Stanislav
- * @copyright	Copyright (c) 2008 - 2014, Pikolor
- * @link		http://pikolor.com
- * @ Version : 1
- * @index
- */
+/*
+* Pikolor Engine - by Pikolor
+*
+* @package		Pikolor Custom CMS
+* @author		Buzco Stanislav
+* @copyright	Copyright (c) 2008 - 2015, Pikolor
+* @link		http://pikolor.com
+* @ Version : 2
+* @index
+*/
+
+error_reporting(E_ALL);
+ini_set('error_reporting', E_ALL);
 
 session_start();
 $_SESSION['time_start_script'] = microtime(true);
@@ -30,11 +33,7 @@ if (!defined('ENGINE_PATH'))
 	define('ENGINE_PATH', ROOT . DS . 'engine' . DS );
 }
 
-if (!defined('APP_PATH'))
-{
-	define('APP_PATH', ROOT . DS . 'app' . DS );
-}
-
-require_once(ENGINE_PATH . 'core' . DS . "Class.Core.php");
+require_once(ENGINE_PATH . 'core' . DS . "Core.php");
 
 $pikolor = new pikolor_core();
+$pikolor->init_core();

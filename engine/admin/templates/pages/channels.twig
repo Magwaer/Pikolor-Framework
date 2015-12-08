@@ -1,0 +1,86 @@
+{% extends "full-page-layout.html" %}
+
+{% block stylesheets %}
+	{{ parent() }}
+	
+{% endblock %}
+
+{% block content %}
+	<div class="page-content-wrapper">
+		<div class="page-content">
+			<h3 class="page-title">
+				{{ page_title }}
+			</h3>
+			<div class="page-bar">
+				<ul class="page-breadcrumb">
+					<li>
+						<i class="fa fa-home"></i>
+						<a href="/admin/dashboard">Dashboard</a>
+						<i class="fa fa-angle-right"></i>
+					</li>
+					<li>
+						<a href="#">Content</a>
+						<i class="fa fa-angle-right"></i>
+					</li>
+					<li>
+						<a href="/admin/channel/{{ this_channel.id }}">{{ this_channel.title }}</a>
+					</li>
+				</ul>
+				<div class="page-toolbar">
+					<div class="btn-group pull-right">
+						<button type="button" class="btn btn-fit-height grey-salt dropdown-toggle" dropdown-toggle" data-toggle="dropdown" data-delay="1000" data-close-others="true">
+							{{ 'Actions' }} <i class="fa fa-angle-down"></i>
+						</button>
+						<ul class="dropdown-menu pull-right" role="menu">
+							<li><a href="#" data-toggle="modal" data-target="#ajax_modal" >New Node</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+			<!-- END PAGE HEADER-->
+			<table class="table table-bordered table-striped ">
+				<thead class="flip-content">
+					<tr>
+						<th width="40px">#</th>
+						<th> Title</th>
+						<th width="100px"> Template </th>
+						<th class="numeric" width="100px"> Views </th>
+						<th class="numeric" width="100px"> Status </th>
+						<th class="numeric" width="100px"> Options </th>
+					</tr>
+				</thead>
+				<tbody>
+				{% for ind,node in nodes %}
+					<tr style="vertical-align:bottom">
+						<td style="vertical-align:middle"> {{ ind + 1}} </td>
+						<td style="vertical-align:middle"> 
+							<a href="/admin/node_edit/{{ node.id }}">{{ node.title }}</a>
+						</td>
+						<td style="vertical-align:middle"> page </td>
+						<td class="numeric" style="vertical-align:middle"> 14 </td>
+						<td class="numeric" style="vertical-align:middle">
+							<span class="label label-sm label-success">Pending</span>
+						</td>
+						<td class="numeric" style="vertical-align:middle">
+							<div class="btn-group pull-right">
+								<button type="button" class="btn btn-sm btn-info dropdown-toggle" data-toggle="dropdown" data-delay="1000" data-close-others="true">
+									{{ 'Actions' }} <i class="fa fa-angle-down"></i>
+								</button>
+								<ul class="dropdown-menu pull-right" role="menu">
+								 <li><a href="/go_user_ce/CheckActionIfAllowed/update/{{ user.user_id }}" data-toggle="modal" data-target="#ajax_modal" >{{ 'Edit' }}</a></li>
+								 <li><a href="/go_user_ce/CheckActionIfAllowed/delete/{{ user.user_id }}/{{user.user}}" onclick="return confirm('Are you sure ?')" >{{ 'Remove' }}</a></li>
+								 <li><a href="/go_user_ce/userinfo/{{ user.user_id }}/{{user.user}}" data-toggle="modal" data-target="#ajax_modal" >{{ 'Info' }}</a></li>
+								 </ul>
+							</div>
+						</td>
+					</tr>
+				{% endfor %}
+				</tbody>
+			</table>
+		</div>
+	</div>
+{% endblock %}
+
+{% block javascript_bottom %}
+	
+{% endblock %}

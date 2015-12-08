@@ -1,0 +1,101 @@
+{% extends "full-page-layout.html" %}
+
+{% block stylesheets %}
+	{{ parent() }}
+	
+{% endblock %}
+
+{% block content %}
+	<div class="page-content-wrapper">
+		<div class="page-content">
+			<h3 class="page-title">
+				{{ page_title }}
+			</h3>
+			<div class="page-bar">
+				<ul class="page-breadcrumb">
+					<li>
+						<i class="fa fa-home"></i>
+						<a href="/dashboard">Dashboard</a>
+						<i class="fa fa-angle-right"></i>
+					</li>
+					<li>
+						<a href="#">Projects</a>
+					</li>
+				</ul>
+				<div class="page-toolbar">
+					<div class="btn-group pull-right">
+						<button type="button" class="btn btn-fit-height grey-salt dropdown-toggle" dropdown-toggle" data-toggle="dropdown" data-delay="1000" data-close-others="true">
+							{{ 'Actions' }} <i class="fa fa-angle-down"></i>
+						</button>
+						<ul class="dropdown-menu pull-right" role="menu">
+							<li><a href="/projects/add" data-toggle="modal" data-target="#ajax_modal" >Add project</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+			<!-- END PAGE HEADER-->
+			<table class="table table-bordered table-striped ">
+				<thead class="flip-content">
+					<tr>
+						<th width="40px">#</th>
+						<th> Name </th>
+						<th> Company </th>
+						<th width="150px"> Spent hours </th>
+						{% if me.role == "admin" %}
+						<th width="100px"> Status </th>
+						{% endif %}
+						<th width="100px"> Options </th>
+					</tr>
+				</thead>
+				<tbody>
+				{% for project in projects %}
+					<tr style="vertical-align:bottom">
+						<td style="vertical-align:middle"> {{ loop.index }} </td>
+						<td style="vertical-align:middle"> 
+							<a href="/project/{{ project.id }}">{{ project.name }}</a>
+						</td>
+						<td style="vertical-align:middle">
+							<a href="/company/{{ project.company_id }}">{{ project.company_name }}</a>
+						</td>
+						<td class="numeric" style="vertical-align:middle">{{ project.total_hours ? project.total_hours  : 0 }}</td>
+						{% if me.role == "admin" %}
+						<td  style="vertical-align:middle">
+							{% if project.status == 'open' %}
+							<span class="label label-sm label-success">Open</span>
+							{% else %}
+							<span class="label label-sm label-danger">Closed</span>
+							{% endif %}
+						</td>
+						{% endif %}
+						<td class="numeric" style="vertical-align:middle">
+							<div class="btn-group pull-right">
+								<button type="button" class="btn btn-sm btn-info dropdown-toggle" data-toggle="dropdown" data-delay="1000" data-close-others="true">
+									{{ 'Actions' }} <i class="fa fa-angle-down"></i>
+								</button>
+								<ul class="dropdown-menu pull-right" role="menu">
+									<li><a href="/projects/edit/{{ project.id }}" data-toggle="modal" data-target="#ajax_modal" >{{ 'Edit' }}</a></li>
+									{% if me.role == "admin" %}
+									<li><a href="/projects/delete/{{ project.id }}" onclick="return confirm('Are you sure ?')" >{{ 'Remove' }}</a></li>
+									{% endif %}
+								</ul>
+							</div>
+						</td>
+					</tr>
+				{% endfor %}
+				</tbody>
+			</table>
+		</div>
+	</div>
+{% endblock %}
+
+{% block javascript_bottom %}
+	<script>
+		$(function(){
+			$(document).on("click" , "#project_wizzard", function(){
+				$.post($("#project_form").attr('action'), $("#project_form").serialize(), function(){
+					location.reload();
+				})
+			})
+		})
+	</script>
+{% endblock %}

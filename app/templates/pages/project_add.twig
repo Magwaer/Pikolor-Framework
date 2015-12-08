@@ -1,0 +1,44 @@
+{% extends "ajax_box.html" %}
+
+{% block content %}
+
+<div class="row">
+	<form action="{{ form_action }}" method="post" class='ajax_form form-horizontal' id='project_form' >
+		<div class="form-body">
+			<div class="form-group">
+				<label class="col-md-4 control-label">{{ 'Name' }}</label>
+				<div class="col-md-7">
+					<input class="form-control" type="text"  name="data[name]" value="{{ project.name }}">
+				</div>
+			</div>
+			{% if me.role == 'client' %}
+			<input type="hidden" name="data[company_id]" value="{{ me.company.id }}" />
+			{% else %}
+			<div class="form-group" id="user_company" >
+				<label class="col-md-4 control-label">{{ 'Company' }}</label>
+				<div class="col-md-7" style="padding-top:7px">
+					<select  class="bs-select" id="user_group" name="data[company_id]">
+						{% for company in companies %}
+						<option value="{{ company.id }}" }  {{ project.company_id == company.id ? 'selected' : '' }}>{{ company.company }}</option>
+						{% endfor %}
+					</select>
+				</div>
+			</div>
+			{% endif %}
+		</div>
+		<input type="hidden" name="action" value="{{ action }}">
+	</form>
+</div>
+{% endblock %}
+
+{% block footer %}	
+<div class="modal-footer">
+	<button type="button" class="btn default" data-dismiss="modal">Close</button>
+	<button type="button" class="btn blue" id="project_wizzard">Save</button>
+</div>
+<script>
+	$(function(){
+		$('.bs-select').selectpicker();
+	})
+</script>
+{% endblock %}
