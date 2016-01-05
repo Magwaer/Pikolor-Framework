@@ -2,11 +2,11 @@
 /*
 * Pikolor Engine - by Pikolor
 *
-* @package		Pikolor Custom CMS
+* @package		Pikolor Engine
 * @author		Buzco Stanislav
-* @copyright	Copyright (c) 2008 - 2015, Pikolor
+* @copyright	Copyright (c) 2008 - 2016, Pikolor
 * @link		http://pikolor.com
-* @ Version : 2
+* @ Version : 2 Beta
 * @index
 */
 

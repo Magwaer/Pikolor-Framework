@@ -2,11 +2,11 @@
 /*
 * Pikolor Engine - by Pikolor
 *
-* @package		Pikolor Custom CMS
+* @package		Pikolor Engine
 * @author		Buzco Stanislav
-* @copyright	Copyright (c) 2008 - 2015, Pikolor
+* @copyright	Copyright (c) 2008 - 2016, Pikolor
 * @link		http://pikolor.com
-* @ Version : 2
+* @ Version : 2 Beta
 * @index
 */
 
@@ -29,9 +29,7 @@ if (!defined('ADR'))
 }
 
 if (!defined('ENGINE_PATH'))
-{
 	define('ENGINE_PATH', ROOT . DS . 'engine' . DS );
-}
 
 require_once(ENGINE_PATH . 'core' . DS . "Core.php");
 
