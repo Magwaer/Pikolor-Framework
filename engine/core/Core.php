@@ -1,10 +1,10 @@
 <?php
 /*
-* Pikolor Engine - by Pikolor
+* Pikolor Engine - by Pikolor Lab
 *
 * @package		Pikolor Engine
-* @author		Buzco Stanislav
-* @copyright	Copyright (c) 2008 - 2016, Pikolor
+* @author		Pikolor Lab
+* @copyright	Copyright (c) 2008 - 2016, Pikolor Lab
 * @link		http://pikolor.com
 * @ Version : 2 Beta
 * @index
@@ -106,7 +106,7 @@ class pikolor_core {
 		
 		$loc_1 = $this->request->location(1);
 		if ($loc_1 == "admin")
-			define('APP_PATH', ENGINE_PATH . 'admin' . DS );
+			define('APP_PATH', ROOT . DS . 'admin' . DS );
 		else
 			define('APP_PATH', ROOT . DS . 'app' . DS );
 		
@@ -218,6 +218,11 @@ class pikolor_core {
 			$_SESSION['langs'] = null;
 			$_SESSION['lang'] = null;
 		}
+	}
+	
+	public function add_to_twig($name, $obj)
+	{
+		$this->template->twig->register_global($name, $obj);
 	}
 }
 

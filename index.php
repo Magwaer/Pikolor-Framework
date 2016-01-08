@@ -1,10 +1,10 @@
 <?php
 /*
-* Pikolor Engine - by Pikolor
+* Pikolor Engine - by Pikolor Lab
 *
 * @package		Pikolor Engine
-* @author		Buzco Stanislav
-* @copyright	Copyright (c) 2008 - 2016, Pikolor
+* @author		Pikolor Lab
+* @copyright	Copyright (c) 2008 - 2016, Pikolor Lab
 * @link		http://pikolor.com
 * @ Version : 2 Beta
 * @index

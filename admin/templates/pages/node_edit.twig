@@ -1,0 +1,128 @@
+{% extends "layout.twig" %}
+
+{% block stylesheets %}
+	{{ parent() }}
+	
+{% endblock %}
+
+{% block content %}
+	
+	
+	<div class="inner">
+		<form class="form-horizontal form-bordered form-row-stripped" action="#">
+			<div class="left_big">
+				<div class="big_box">
+					<div class="btn-group pull-right">
+						<button type="button" class="btn btn-fit-height btn-grey dropdown-toggle" dropdown-toggle" data-toggle="dropdown" data-delay="1000" data-close-others="true">
+							{{ 'Actions' }} <i class="fa fa-angle-down"></i>
+						</button>
+						<ul class="dropdown-menu pull-right" role="menu">
+							<li><a href="#" data-toggle="modal" data-target="#ajax_modal" >Dublicate Node</a></li>
+							<li><a href="#" data-toggle="modal" data-target="#ajax_modal" >Remove Node</a></li>
+						</ul>
+					</div>
+			
+					<h3 class="box-title">
+						Content
+					</h3>
+		
+					<div class="form-body">
+						<div class="form-group">
+							<label class="control-label col-md-3">First Name</label>
+							<div class="col-md-9">
+								
+								<div role="lang" data-lang="ro">
+									<input type="text" placeholder="ro ro ro " class="form-control" >
+								</div>
+								<div role="lang" data-lang="ru">
+									<input type="text" placeholder="ru ru ru " class="form-control" >
+								</div>
+							
+								
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="control-label col-md-3">Last Name</label>
+							<div class="col-md-9">
+								<input type="text" class="form-control" placeholder="medium">
+								<span class="help-block">
+								This is inline help </span>
+							</div>
+						</div>
+						
+						<div class="form-group">
+							<label class="control-label col-md-3">Street</label>
+							<div class="col-md-9">
+								<input type="text" class="form-control">
+							</div>
+						</div>
+						
+					</div>
+					<div class="form-actions">
+						<div class="row">
+							<div class="col-md-offset-3 col-md-9">
+								<button class="btn btn-blue" type="submit"><i class="fa fa-check"></i> Save</button>
+								<button class="btn btn-default" type="button">Cancel</button>
+							</div>
+						</div>
+					</div>
+
+					
+				</div>
+			</div>
+			
+			<div class="small_right">
+			
+			
+				<div class="big_box">
+					<h3 class="box-title">
+						Options
+					</h3>
+					
+					<div class="portlet-body form">
+						<div class="form-body">
+
+							<div class="form-group short-group">
+								<label class="control-label">Language</label>
+								<select class="bs-select " data-width="100%" id="lang_switcher">
+									<option value="ro">Română</option>
+									<option value="ru">Руский</option>
+								</select>
+							</div>
+
+							<div class="form-group short-group">
+								<label class="control-label" >
+									<input type="checkbox" {{ this_node.status == 'active' ? 'checked' : '' }} class="make-switch" data-on-color="success" data-off-color="warning">
+									Published
+								</label>
+							</div>
+							
+							{% import "./helper/form.twig" as form_helper %}
+							<div class="form-group short-group">
+								<label class="control-label ">Template</label>
+								<select class="bs-select" data-width="100%">
+									{{ form_helper.node_templates(templates, 0) }}
+								</select>
+							</div>
+							
+						</div>
+						<div class="form-actions">
+							<div class="row">
+								<div class="col-md-offset-3 col-md-9">
+									<button class="btn btn-blue" type="submit"><i class="fa fa-check"></i> Save</button>
+									<button class="btn btn-default" type="button">Cancel</button>
+								</div>
+							</div>
+						</div>
+							
+					</div>
+						
+					
+				</div>
+				<div class="space-20"></div>
+			</div>
+		</form>
+	</div>
+{% endblock %}
+
+

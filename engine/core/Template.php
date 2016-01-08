@@ -1,10 +1,10 @@
 <?php
 /*
-* Pikolor Engine - by Pikolor
+* Pikolor Engine - by Pikolor Lab
 *
 * @package		Pikolor Engine
-* @author		Buzco Stanislav
-* @copyright	Copyright (c) 2008 - 2016, Pikolor
+* @author		Pikolor Lab
+* @copyright	Copyright (c) 2008 - 2016, Pikolor Lab
 * @link		http://pikolor.com
 * @ Version : 2 Beta
 * @index
@@ -30,10 +30,10 @@ class pikolor_template extends APP_Controller{
 		
 		if ($this->is_admin)
 		{
-			$this->set_var("asset_path" , "/engine/admin/assets/");
-			$this->set_var("img_path" , "/engine/admin/web/img/");
-			$this->set_var("css_path" , "/engine/admin/web/css/");
-			$this->set_var("js_path" , "/engine/admin/web/js/");
+			$this->set_var("img_path" , "/admin/web/img/");
+			$this->set_var("css_path" , "/admin/web/css/");
+			$this->set_var("js_path" , "/admin/web/js/");
+			$this->set_var("libs_path" , "/admin/web/libs/");
 		}
 		else
 		{

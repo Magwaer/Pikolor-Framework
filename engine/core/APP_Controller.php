@@ -48,6 +48,8 @@ class APP_Controller extends pikolor_core{
 			$this->route->parse();
 			
 			$this->template->route = $this->route;
+			
+			$this->add_to_twig("this" , $this);
 		}
 	}
 	

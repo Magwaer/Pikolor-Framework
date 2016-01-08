@@ -1,0 +1,224 @@
+{% extends "layout.twig" %}
+
+{% block content %}
+	
+	
+	<div class="inner">
+		<form class="form-horizontal ajax_form" action="{{ this.route.generate('edit_custom_field' , {'id' : field.id }) }}" method="post">
+			<div class="left_big">
+				<div class="big_box">
+					
+					<h3 class="box-title">
+						Content
+					</h3>
+		
+					<div class="form-body">
+						<div class="form-group">
+							<label class="control-label col-md-3">Field type</label>
+							<div class="col-md-9">
+								
+								<select class="bs-select " id="custom_field_type" name="data[type]">
+								{% for type in field_types %}
+									<option value="{{ type.label }}" {{ field.type == type.label ? 'selected' : '' }}>{{ type.name }}</option>
+								{% endfor %}	
+								</select>
+								
+							</div>
+						</div>
+						
+						<div class="form-group">
+							<label class="control-label col-md-3">Field Name</label>
+							<div class="col-md-9">
+								<input type="text" class="form-control" name="data[name]" value="{{ field.name }}">
+								<span class="help-block">
+									This is the name that will appear in the PUBLISH page 
+								</span>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="control-label col-md-3">Field label</label>
+							<div class="col-md-9">
+								<input type="text" class="form-control" name="data[label]" value="{{ field.label }}">
+								<span class="help-block">
+									Single word, no spaces. Underscores and dashes allowed
+								</span>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="control-label col-md-3">Field Instructions</label>
+							<div class="col-md-9">
+								<textarea class="form-control" name="data[info]">{{ field.info }}</textarea>
+								<span class="help-block">
+									Instructions for authors on how or what to enter into this custom field when submitting an entry. 
+								</span>
+							</div>
+						</div>
+						
+					</div>
+					<div class="space-20"></div>
+					
+				</div>
+				
+				<div class="space-20"></div>
+				
+				<div class="big_box">
+					
+					<h3 class="box-title">
+						Custom Fields Options
+					</h3>
+					
+					<div class="form-body">
+						
+						<div class="field_options" data-type="text">
+							<div class="form-group">
+								<label class="control-label col-md-3">Maximum length</label>
+								<div class="col-md-9">
+									<input type="text" class="form-control" name="data[options][text][max_length]" value="{{ field.options.text.max_length ? field.options.text.max_length : 100 }}" style="width:100px">
+								</div>
+							</div>
+						</div>
+						
+						<div class="field_options" data-type="textarea">
+							<div class="form-group">
+								<label class="control-label col-md-3">Textarea Rows</label>
+								<div class="col-md-9">
+									<input type="text" class="form-control" name="data[options][textarea][rows]" value="{{ field.options.textarea.rows ? field.options.textarea.rows : 5}}" style="width:100px">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="control-label col-md-3">Default formating</label>
+								<div class="col-md-9">
+									<select class="bs-select " name="data[options][textarea][formating]">
+										<option value="none" {{ field.options.textarea.formating == 'none' ? 'selected' : '' }}>None</option>
+										<option value="br" {{ field.options.textarea.formating == 'br' ? 'selected' : '' }}>Auto break line</option>
+										<option value="p" {{ field.options.textarea.formating == 'p' ? 'selected' : '' }}>Auto paragraph</option>
+										<option value="xhtml" {{ field.options.textarea.formating == 'xhtml' ? 'selected' : '' }}>XHTML</option>
+									</select>
+								</div>
+							</div>
+						</div>
+						
+						<div class="field_options" data-type="rich_textarea">
+							<div class="form-group">
+								<label class="control-label col-md-3">Textarea height</label>
+								<div class="col-md-9">
+									<input type="text" class="form-control" name="data[options][rich_textarea][height]" value="{{ field.options.rich_textarea.height ? field.options.rich_textarea.height : 300 }}" style="width:100px">
+								</div>
+							</div>
+						</div>
+						
+						<div class="field_options" data-type="checkbox">
+							<div class="form-group">
+								<label class="control-label col-md-3">Options</label>
+								<div class="col-md-9">
+									<textarea class="form-control" name="data[options][checkbox][options]">{{ field.options.checkbox.options}}</textarea>
+									<span class="help-block">
+										Put each item on a single line 
+									</span>
+								</div>
+							</div>
+						</div>
+						
+						<div class="field_options" data-type="radio">
+							<div class="form-group">
+								<label class="control-label col-md-3">Options</label>
+								<div class="col-md-9">
+									<textarea class="form-control" name="data[options][radio][options]">{{ field.options.radio.options}}</textarea>
+									<span class="help-block">
+										Put each item on a single line 
+									</span>
+								</div>
+							</div>
+						</div>
+						
+						<div class="field_options" data-type="select">
+							<div class="form-group">
+								<label class="control-label col-md-3">Options</label>
+								<div class="col-md-9">
+									<textarea class="form-control" name="data[options][select][options]">{{ field.options.select.options}}</textarea>
+									<span class="help-block">
+										Put each item on a single line 
+									</span>
+								</div>
+							</div>
+						</div>
+						
+						<div class="field_options" data-type="file">
+							<div class="form-group">
+								<label class="control-label col-md-3">Save Path</label>
+								<div class="col-md-9">
+									<input type="text" class="form-control" name="data[options][file][path]" value="{{ field.options.file.path ? field.options.file.path : '/upload/' }}">
+								</div>
+							</div>
+						</div>
+						
+					</div>
+					<div class="form-actions">
+						<div class="row">
+							<div class="col-md-offset-3 col-md-9">
+								<button class="btn btn-blue" type="submit"><i class="fa fa-check"></i> Save</button>
+								<button class="btn btn-default" type="button">Cancel</button>
+							</div>
+						</div>
+					</div>
+					
+				</div>
+			</div>
+			
+			<div class="small_right">
+			
+			
+				<div class="big_box">
+					<h3 class="box-title">
+						Options
+					</h3>
+					
+					<div class="portlet-body form">
+						<div class="form-body">
+							
+							<div class="form-group short-group">
+								<label class="control-label ">Multilanguage</label>
+								<div >
+									<label style="margin:0 15px 0 0">
+										<input type="radio" name="data[multilang]" value="0" {{ field.multilang == 0 ? 'checked' : '' }}/> No
+									</label>
+									<label>
+										<input type="radio" name="data[multilang]" value="1" {{ field.multilang == 1 ? 'checked' : '' }}/> Yes
+									</label>
+								</div>
+								
+							</div>
+							<div class="form-group short-group">
+								<label class="control-label ">Show this field by default ?</label>
+								<div >
+									<label style="margin:0 15px 0 0">
+										<input type="radio" name="data[show]" value="0"  {{ field.show == 0 ? 'checked' : '' }}/> No
+									</label>
+									<label>
+										<input type="radio" name="data[show]" value="1"  {{ field.show == 1 ? 'checked' : '' }}/> Yes
+									</label>
+								</div>
+							</div>
+							<div class="form-group short-group">
+								<label class="control-label ">Field Display Order</label>
+								<input type="text" class="form-control" style="width:80px" name="data[order]" value="{{ field.order }}">
+								
+							</div>
+							
+							<div class="form-group short-group" style="margin:0; padding:0 15px 15px;">
+								<button class="btn btn-blue" type="submit"><i class="fa fa-check"></i> Save</button>
+								<button class="btn btn-default" type="button">Cancel</button>
+							</div>
+							
+						</div>
+					</div>
+						
+					
+				</div>
+				<div class="space-20"></div>
+			</div>
+			<input type="hidden" name="ac" value="edit" />
+			<input type="hidden" name="data[id]" value="{{ field.id }}" />
+		</form>
+	</div>
+{% endblock %}

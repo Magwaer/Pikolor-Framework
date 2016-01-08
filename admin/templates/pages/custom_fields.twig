@@ -1,0 +1,56 @@
+{% extends "layout.twig" %}
+
+{% block content %}
+	
+	<div class="inner">
+		<div class="big_box">
+			<div class="btn-group pull-right">
+				<button type="button" class="btn btn-fit-height btn-grey dropdown-toggle" dropdown-toggle" data-toggle="dropdown" data-delay="1000" data-close-others="true">
+					{{ 'Actions' }} <i class="fa fa-angle-down"></i>
+				</button>
+				<ul class="dropdown-menu pull-right" role="menu">
+					<li><a href="{{ this.route.generate('add_custom_field' , {'id' : group.id }) }}" >New Custom Field</a></li>
+				</ul>
+			</div>
+			
+			<h3 class="box-title">
+				{{ page_title }}
+			</h3>
+			
+			
+			<!-- END PAGE HEADER-->
+			<table class="table ">
+				<thead class="flip-content">
+					<tr>
+						<th> Title</th>
+						<th width="150px">Type</th>
+						<th class="numeric" width="100px"> Options </th>
+					</tr>
+				</thead>
+				<tbody>
+				{% for ind,field in fields %}
+					<tr style="vertical-align:bottom">
+						<td style="vertical-align:middle"> 
+							<a href="{{ this.route.generate('edit_custom_field' , {'id' : field.id }) }}">{{ field.name }}</a>
+						</td>
+						<td class="numeric" style="vertical-align:middle"> {{ field.type_name }} </td>
+						<td class="numeric" style="vertical-align:middle">
+							<div class="btn-group pull-right">
+								<button type="button" class="btn btn-sm btn-blue dropdown-toggle" data-toggle="dropdown" data-delay="1000" data-close-others="true">
+									{{ 'Actions' }} <i class="fa fa-angle-down"></i>
+								</button>
+								<ul class="dropdown-menu pull-right" role="menu">
+									<li><a href="{{ this.route.generate('edit_custom_field' , {'id' : field.id }) }}" >{{ 'Edit' }}</a></li>
+									<li><a href="/go_user_ce/CheckActionIfAllowed/delete/{{ user.user_id }}/{{user.user}}" onclick="return confirm('Are you sure ?')" >{{ 'Remove' }}</a></li>
+								</ul>
+							</div>
+						</td>
+					</tr>
+				{% endfor %}
+				</tbody>
+			</table>
+		</div>
+	</div>
+{% endblock %}
+
+

@@ -1,0 +1,94 @@
+<div id="sidebar">
+	<div class="col">
+		<a href="/" class="logo">
+			<img src="{{ img_path }}white_logo.png" />
+		</a>
+		
+		<div class="no-scroll">
+			<div class="scroll">
+					
+				<div class="cap">Main</div>
+				<ul class="nav_menu">
+					<li class="{% if page == 'dashboard' %}active{% endif %}">
+						<a href="{{ this.route.generate('dashboard') }}" >
+							<i class="fa fa-home"></i>
+							<span class="title">Dashboard</span>
+						</a>
+					</li>
+					
+					<li class="{% if tab == 'channels'%}active open{% endif %}">
+						<a href="javascript:;">
+							<i class="fa fa-folder-open"></i>
+							<span class="title">Content</span>
+							<span class="fa fa-caret-{{ tab == 'channels' ? 'up' : 'down' }} arr"></span>
+						</a>
+						<ul class="sub-menu">
+							{% for channel in channels %}
+							<li class="{% if page == 'channel_' ~ channel.id %}active{% endif %}">
+								<a href="{{ this.route.generate('channel' ,{'id' : channel.id }) }}">{{ channel.title }}</a>
+							</li>
+							{% endfor %}
+						</ul>
+					</li>
+					
+					<li class=" {% if tab == 'templates'%}active{% endif %}">
+						<a href="javascript:;">
+							<i class="fa fa-th-large"></i>
+							<span class="title">Templates</span>
+							<span class="fa fa-caret-{{ tab == 'templates' ? 'up' : 'down' }} arr"></span>
+						</a>
+						<ul class="sub-menu">
+							<li class="{% if page == 'manager'%}active{% endif %}">
+								<a href="{{ this.route.generate('template_manager') }}">Templates manager</a>
+							</li>
+							<li class="{% if page == 'channels'%}active{% endif %}">
+								<a href="{{ this.route.generate('manage_channels') }}">Channles</a>
+							</li>
+							<li class="{% if page == 'custom_fields'%}active{% endif %}">
+								<a href="{{ this.route.generate('fields_groups') }}">Custom fields</a>
+							</li>
+						</ul>
+					</li>
+					
+					<li class=" {% if tab == 'settings'%}active{% endif %}">
+						<a href="javascript:;">
+							<i class="fa fa-cogs"></i>
+							<span class="title">Settings</span>
+							<span class="fa fa-caret-{{ tab == 'settings' ? 'up' : 'down' }} arr"></span>
+						</a>
+						<ul class="sub-menu">
+							<li class="{% if page == 'logs'%}active{% endif %}">
+								<a href="/logs">General configuration</a>
+							</li>
+							<li class="{% if page == 'calltimes'%}active{% endif %}">
+								<a href="/calltimes">Security</a>
+							</li>
+						</ul>
+					</li>
+				</ul>
+				
+				<div class="cap">Components</div>
+				<ul class="nav_menu">
+					<li class=" {% if tab == 'users'%}active{% endif %}">
+						<a href="javascript:;">
+							<i class="fa fa-users"></i>
+							<span class="title">Users</span>
+							<span class="fa fa-caret-{{ tab == 'users' ? 'up' : 'down' }} arr"></span>
+						</a>
+						<ul class="sub-menu">
+							<li class="{% if page == 'logs'%}active{% endif %}">
+								<a href="/logs">All users</a>
+							</li>
+						</ul>
+					</li>
+
+				</ul>
+					
+			</div>
+		</div>
+
+		<div class="side_footer">
+			2016 &copy; Pikolor Lab
+		</div>
+	</div>	
+</div>

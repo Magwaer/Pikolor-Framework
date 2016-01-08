@@ -1,0 +1,248 @@
+@import url(https://fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,300italic,400italic,500,500italic,700,700italic,900,900italic&subset=latin,cyrillic);
+
+body{
+	background:#f0f0f0;
+	padding:50px 0 30px;
+}
+*{
+	font-family:"Roboto","Helvetica Neue",Helvetica,Arial,sans-serif;
+	margin:0;
+	padding:0;
+}
+
+#header{
+	position:fixed;
+	right:0;
+	top:0;
+	width:100%;
+	height:60px;
+	background:#FFF;
+	padding:0 0 0 200px;
+	z-index:100;
+	box-shadow:0 2px 2px rgba(0, 0, 0, 0.03), 0 1px 0 rgba(0, 0, 0, 0.03);
+}
+#header .me{
+	float:right;
+	margin:0 12px;
+}
+#header .me .avatar{
+	width:36px;
+	height:36px;
+	display:inline-block;
+	overflow:hidden;
+	border-radius:18px;
+	margin:12px 0 0;
+	cursor:pointer;
+	box-shadow:3px 3px 8px -5px #000000 inset;
+}
+#header .me .avatar img{
+	width:36px;
+}
+#sidebar{
+	background:#2e3e4e;
+	position:fixed;
+	width:200px;
+	height:100%;
+	left:0;
+	top:0;
+	z-index:101;
+}
+#sidebar .col{
+	display:flex;
+	flex-direction:column;
+	left:0;
+	top:0;
+	bottom:0;
+	right:0;
+	position:absolute;
+	overflow:hidden;
+	color:#818a91;
+}
+#sidebar .no-scroll{
+	flex:1 1 0;
+	overflow:auto;
+	width:220px;
+}
+#sidebar .scroll{
+	width:200px;
+}
+#sidebar .logo{
+	display:block;
+	margin:14px 0 17px 15px;
+}
+#sidebar .side_footer{
+	font-size:11px;
+	color:#818a91;
+	padding:5px;
+	border-top:1px solid rgba(120, 130, 140, 0.13);
+}
+#sidebar .scroll .cap{
+	padding:10px 15px;
+	font-size:13px;
+}
+#sidebar .scroll ul{
+	list-style:none;
+}
+#sidebar .scroll ul li{}
+#sidebar .scroll ul li a{
+	display:block;
+	text-decoration:none;
+	color:rgba(255,255,255,0.7);
+	padding:8px 5px 8px 15px;
+	font-weight:500;
+}
+#sidebar .scroll ul li i{
+	color:#0cc2aa ;
+	opacity:0.7;
+	text-shadow:1px 1px 1px #222;
+}
+#sidebar .scroll ul li .title{
+	padding:0 0 0 8px;
+}
+#sidebar .scroll ul li .arr{
+	float:right;
+	margin:4px 10px 0 0;
+}
+
+#sidebar .scroll ul li.active,#sidebar .scroll ul li:hover{
+	background:rgba(0,0,0,0.08);
+}
+#sidebar .scroll ul li.active .sub-menu{
+	max-height:500px;
+}
+#sidebar .scroll ul li .sub-menu{
+	max-height:0;
+	transition:max-height 0.4s ease 0s;
+	overflow:hidden;
+}
+#sidebar .scroll ul li .sub-menu li{
+	padding:0 0 0 25px;
+}
+#sidebar .scroll ul li .sub-menu li a{
+	font-weight:normal;
+	font-size:13px;
+}
+#container{
+	padding:60px 0 0 200px;
+	position:absolute;
+	left:0;
+	top:0;
+	width:100%;
+}
+#content{}
+#content .page-title{
+	font-size:23px;
+	font-weight:300;
+	margin:0;
+	padding:20px 20px 0;
+}
+#content .box-title{
+	font-size:16px;
+	font-weight:500;
+	margin:0;
+	padding:15px 0 15px 15px;;
+}
+#content .inner{
+	padding:20px;
+	max-width:1140px;
+	margin:0 auto;
+}
+#content .inner .big_box{
+	background:#fff;
+	box-shadow:0 0 1px rgba(0, 0, 0, 0.15);
+}
+#content .space-20{
+	height:20px;
+}
+#content .left_big{
+	float:left;
+	max-width:820px;
+	min-width:460px;
+	width:100%;
+	padding:0 20px 20px 0;
+	
+}
+#content .small_right{
+	float:left;
+	width:280px;
+}
+.btn-blue{
+	/*
+	background-image: linear-gradient(to bottom, #5bc0de 0px, #2aabd2 100%);
+    background-repeat: repeat-x;
+	*/
+	background:#0cc2aa;
+    border:1px solid rgba(0,0,0,0.15);
+	color:#fff;
+	border-radius:3px;
+}
+.btn-grey{
+    background: #fff none repeat scroll 0 0;
+    border-color: #ddd;
+    border-radius: 0;
+    border-width: 0 0 1px 1px;
+    color: #333;
+}
+.btn-grey:focus,.btn-grey:hover,.btn-grey:active{
+	background:#f44336 ;
+	color:#fff;
+	border-color:rgba(0,0,0,0.15);
+}
+.btn-blue:hover,.btn-blue:focus{
+	color:#fff;
+	background:#0bb19b;
+}
+.btn-default{
+	background:#e0e0e0 ;
+	border-radius:3px;
+}
+.btn-default:hover,.btn-default:focus{
+	
+}
+.table{
+	font-size:13px;
+}
+.table > thead > tr > th{
+	border-bottom:1px solid rgba(120, 130, 140, 0.1);
+	font-weight:500;
+}
+
+.table > thead > tr > th, .table > tbody > tr > th, .table > tfoot > tr > th, .table > thead > tr > td, .table > tbody > tr > td, .table > tfoot > tr > td{
+	border-top:1px solid rgba(120, 130, 140, 0.1);
+	padding:10px 16px;
+}
+
+.form-actions{
+	padding:0 0 15px;
+}
+.modal-body .form-actions{
+	padding:0 ;
+}
+.form-group.short-group{
+	padding:0 15px;
+}
+.form-group.short-group .control-label{
+	margin-bottom:5px;
+}
+.dropdown-menu{
+	border-radius:3px;
+}
+.dropdown-menu li a:hover{
+	background:rgba(0,0,0,0.07);
+}
+.form-horizontal .form-group,.row{
+	margin-left:0;
+	margin-right:0;	
+}
+#content .dropdown-menu.inner{
+	padding:0;
+}
+a:focus{
+	outline:none;
+}
+a img{
+	border:none;
+}
+.clear{
+	clear:both;
+}

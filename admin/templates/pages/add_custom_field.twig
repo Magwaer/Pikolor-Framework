@@ -1,0 +1,223 @@
+{% extends "layout.twig" %}
+
+{% block content %}
+	
+	
+	<div class="inner">
+		<form class="form-horizontal ajax_form" action="{{ this.route.generate('add_custom_field' , {'id' : group.id }) }}" method="post">
+			<div class="left_big">
+				<div class="big_box">
+					
+					<h3 class="box-title">
+						Content
+					</h3>
+		
+					<div class="form-body">
+						<div class="form-group">
+							<label class="control-label col-md-3">Field type</label>
+							<div class="col-md-9">
+								
+								<select class="bs-select " id="custom_field_type" name="data[type]">
+								{% for type in field_types %}
+									<option value="{{ type.label }}">{{ type.name }}</option>
+								{% endfor %}	
+								</select>
+								
+							</div>
+						</div>
+						
+						<div class="form-group">
+							<label class="control-label col-md-3">Field Name</label>
+							<div class="col-md-9">
+								<input type="text" class="form-control" name="data[name]">
+								<span class="help-block">
+									This is the name that will appear in the PUBLISH page 
+								</span>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="control-label col-md-3">Field label</label>
+							<div class="col-md-9">
+								<input type="text" class="form-control" name="data[label]">
+								<span class="help-block">
+									Single word, no spaces. Underscores and dashes allowed
+								</span>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="control-label col-md-3">Field Instructions</label>
+							<div class="col-md-9">
+								<textarea class="form-control" name="data[info]"></textarea>
+								<span class="help-block">
+									Instructions for authors on how or what to enter into this custom field when submitting an entry. 
+								</span>
+							</div>
+						</div>
+						
+					</div>
+					<div class="space-20"></div>
+					
+				</div>
+				
+				<div class="space-20"></div>
+				
+				<div class="big_box">
+					
+					<h3 class="box-title">
+						Custom Fields Options
+					</h3>
+					
+					<div class="form-body">
+						
+						<div class="field_options" data-type="text">
+							<div class="form-group">
+								<label class="control-label col-md-3">Maximum length</label>
+								<div class="col-md-9">
+									<input type="text" class="form-control" name="data[options][text][max_length]" style="width:100px" value="100">
+								</div>
+							</div>
+						</div>
+						
+						<div class="field_options" data-type="textarea">
+							<div class="form-group">
+								<label class="control-label col-md-3">Textarea Rows</label>
+								<div class="col-md-9">
+									<input type="text" class="form-control" name="data[options][textarea][rows]" style="width:100px" value="5">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="control-label col-md-3">Default formating</label>
+								<div class="col-md-9">
+									<select class="bs-select " id="custom_field_type" name="data[options][textarea][formating]">
+										<option value="none">None</option>
+										<option value="br">Auto break line</option>
+										<option value="p">Auto paragraph</option>
+										<option value="xhtml">XHTML</option>
+									</select>
+								</div>
+							</div>
+						</div>
+						
+						<div class="field_options" data-type="rich_textarea">
+							<div class="form-group">
+								<label class="control-label col-md-3">Textarea height</label>
+								<div class="col-md-9">
+									<input type="text" class="form-control" name="data[options][rich_textarea][height]" style="width:100px" value="300">
+								</div>
+							</div>
+						</div>
+						
+						<div class="field_options" data-type="checkbox">
+							<div class="form-group">
+								<label class="control-label col-md-3">Options</label>
+								<div class="col-md-9">
+									<textarea class="form-control" name="data[options][checkbox][options]"></textarea>
+									<span class="help-block">
+										Put each item on a single line 
+									</span>
+								</div>
+							</div>
+						</div>
+						
+						<div class="field_options" data-type="radio">
+							<div class="form-group">
+								<label class="control-label col-md-3">Options</label>
+								<div class="col-md-9">
+									<textarea class="form-control" name="data[options][radio][options]"></textarea>
+									<span class="help-block">
+										Put each item on a single line 
+									</span>
+								</div>
+							</div>
+						</div>
+						
+						<div class="field_options" data-type="select">
+							<div class="form-group">
+								<label class="control-label col-md-3">Options</label>
+								<div class="col-md-9">
+									<textarea class="form-control" name="data[options][select][options]"></textarea>
+									<span class="help-block">
+										Put each item on a single line 
+									</span>
+								</div>
+							</div>
+						</div>
+						
+						<div class="field_options" data-type="file">
+							<div class="form-group">
+								<label class="control-label col-md-3">Save Path</label>
+								<div class="col-md-9">
+									<input type="text" class="form-control" name="data[options][file][path]" value="/upload/">
+								</div>
+							</div>
+						</div>
+						
+					</div>
+					<div class="form-actions">
+						<div class="row">
+							<div class="col-md-offset-3 col-md-9">
+								<button class="btn btn-blue" type="submit"><i class="fa fa-check"></i> Save</button>
+								<button class="btn btn-default" type="button">Cancel</button>
+							</div>
+						</div>
+					</div>
+					
+				</div>
+			</div>
+			
+			<div class="small_right">
+			
+			
+				<div class="big_box">
+					<h3 class="box-title">
+						Options
+					</h3>
+					
+					<div class="portlet-body form">
+						<div class="form-body">
+							
+							<div class="form-group short-group">
+								<label class="control-label ">Multilanguage</label>
+								<div >
+									<label style="margin:0 15px 0 0">
+										<input type="radio" name="data[multilang]" value="0" checked/> No
+									</label>
+									<label>
+										<input type="radio" name="data[multilang]" value="1"/> Yes
+									</label>
+								</div>
+								
+							</div>
+							<div class="form-group short-group">
+								<label class="control-label ">Show this field by default ?</label>
+								<div >
+									<label style="margin:0 15px 0 0">
+										<input type="radio" name="data[show]" value="0" /> No
+									</label>
+									<label>
+										<input type="radio" name="data[show]" value="1" checked/> Yes
+									</label>
+								</div>
+							</div>
+							<div class="form-group short-group">
+								<label class="control-label ">Field Display Order</label>
+								<input type="text" class="form-control" style="width:80px" name="data[order]" value="{{ max_order }}">
+								
+							</div>
+							
+							<div class="form-group short-group" style="margin:0; padding:0 15px 15px;">
+								<button class="btn btn-blue" type="submit"><i class="fa fa-check"></i> Save</button>
+								<button class="btn btn-default" type="button">Cancel</button>
+							</div>
+							
+						</div>
+					</div>
+						
+					
+				</div>
+				<div class="space-20"></div>
+			</div>
+			<input type="hidden" name="ac" value="add" />
+		</form>
+	</div>
+{% endblock %}

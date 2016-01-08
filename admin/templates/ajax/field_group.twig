@@ -1,0 +1,30 @@
+{% extends "ajax_box.twig" %}
+
+{% block content %}
+	
+	
+	<div class="inner">
+		<form class="form-horizontal ajax_form" action="{{ form_action }}" data-callback="Admin.hide_modal()">
+			<div class="form-body">
+				<div class="form-group">
+					<label class="control-label col-md-3">Group Name</label>
+					<div class="col-md-9">
+						<input type="text" placeholder="" name="data[name]" class="form-control" value="{{ group.name }}">
+					</div>
+				</div>
+				
+			</div>
+			<div class="form-actions">
+				<div class="row">
+					<div class="col-md-offset-3 col-md-9">
+						<button class="btn btn-blue" type="submit"><i class="fa fa-check"></i> Save</button>
+						<button class="btn btn-default" type="button" data-dismiss="modal">Cancel</button>
+					</div>
+				</div>
+			</div>
+			<input type="hidden" name="ac" value="{{ action }}" />
+		</form>	
+	</div>
+{% endblock %}
+
+

@@ -62,7 +62,7 @@ class Twig {
 		//$this->_ci = & get_instance();
 		//$this->_ci->config->load(self::TWIG_CONFIG_FILE); // load config file
 		// set include path for twig
-		ini_set('include_path', ini_get('include_path') . PATH_SEPARATOR . ENGINE_PATH . 'lib' . DS . 'Twig' . DS . 'lib' . DS . 'Twig');
+		ini_set('include_path', ini_get('include_path') . PATH_SEPARATOR . ENGINE_PATH . 'lib' . DS . 'Twig' );
 		require_once (string)'Autoloader.php';
 		// register autoloader
 		Twig_Autoloader::register();
@@ -124,6 +124,21 @@ class Twig {
 	public function register_function($name, Twig_FunctionInterface $function) 
 	{
 		$this->_twig_env->addFunction($name, $function);
+	}
+	
+	/**
+	 * Entry point for controllers (and the likes) to register
+	 * callback functions to be used from Twig templates
+	 * 
+	 * @param string                 $name     name of function
+	 * @param Twig_FunctionInterface $function Function pointer
+	 * 
+	 * @return void
+	 * 
+	 */
+	public function register_global($name, $obj) 
+	{
+		$this->_twig_env->addGlobal($name, $obj);
 	}
 
 	/**

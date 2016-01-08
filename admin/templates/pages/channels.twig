@@ -1,0 +1,71 @@
+{% extends "layout.twig" %}
+
+{% block stylesheets %}
+	{{ parent() }}
+	
+{% endblock %}
+
+{% block content %}
+	
+	
+	<div class="inner">
+		<div class="big_box">
+			<div class="btn-group pull-right">
+				<button type="button" class="btn btn-fit-height btn-grey dropdown-toggle" dropdown-toggle" data-toggle="dropdown" data-delay="1000" data-close-others="true">
+					{{ 'Actions' }} <i class="fa fa-angle-down"></i>
+				</button>
+				<ul class="dropdown-menu pull-right" role="menu">
+					<li><a href="#" data-toggle="modal" data-target="#ajax_modal" >New Node</a></li>
+				</ul>
+			</div>
+			
+			<h3 class="box-title">
+				{{ page_title }}
+			</h3>
+			
+			
+			<!-- END PAGE HEADER-->
+			<table class="table ">
+				<thead class="flip-content">
+					<tr>
+						<th> Title</th>
+						<th width="100px"> Template </th>
+						<th class="numeric" width="100px"> Views </th>
+						<th class="numeric" width="100px"> Status </th>
+						<th class="numeric" width="100px"> Options </th>
+					</tr>
+				</thead>
+				<tbody>
+				{% for ind,node in nodes %}
+					<tr style="vertical-align:bottom">
+						<td style="vertical-align:middle"> 
+							<a href="/admin/node_edit/{{ node.id }}">{{ node.title }}</a>
+						</td>
+						<td style="vertical-align:middle"> page </td>
+						<td class="numeric" style="vertical-align:middle"> 14 </td>
+						<td class="numeric" style="vertical-align:middle">
+							<span class="label label-sm label-success">Pending</span>
+						</td>
+						<td class="numeric" style="vertical-align:middle">
+							<div class="btn-group pull-right">
+								<button type="button" class="btn btn-sm btn-blue dropdown-toggle" data-toggle="dropdown" data-delay="1000" data-close-others="true">
+									{{ 'Actions' }} <i class="fa fa-angle-down"></i>
+								</button>
+								<ul class="dropdown-menu pull-right" role="menu">
+								 <li><a href="/go_user_ce/CheckActionIfAllowed/update/{{ user.user_id }}" data-toggle="modal" data-target="#ajax_modal" >{{ 'Edit' }}</a></li>
+								 <li><a href="/go_user_ce/CheckActionIfAllowed/delete/{{ user.user_id }}/{{user.user}}" onclick="return confirm('Are you sure ?')" >{{ 'Remove' }}</a></li>
+								 <li><a href="/go_user_ce/userinfo/{{ user.user_id }}/{{user.user}}" data-toggle="modal" data-target="#ajax_modal" >{{ 'Info' }}</a></li>
+								 </ul>
+							</div>
+						</td>
+					</tr>
+				{% endfor %}
+				</tbody>
+			</table>
+		</div>
+	</div>
+{% endblock %}
+
+{% block javascript_bottom %}
+	
+{% endblock %}

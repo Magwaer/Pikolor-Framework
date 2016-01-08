@@ -1,4 +1,14 @@
 <?php
+/*
+* Pikolor Engine - by Pikolor Lab
+*
+* @package		Pikolor Engine
+* @author		Pikolor Lab
+* @copyright	Copyright (c) 2008 - 2016, Pikolor Lab
+* @link		http://pikolor.com
+* @ Version : 2 Beta
+* @index
+*/
 
 class Access extends Model{
 	
@@ -34,6 +44,7 @@ class Access extends Model{
 		{
 			$user = $this->db->where($this->login_by, $login)->getOne("p_users U", "U.*, R.role");
 		}
+		
 		if ($user['id'])
 		{
 			if ($remember)

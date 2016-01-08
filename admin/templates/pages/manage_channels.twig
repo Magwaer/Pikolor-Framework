@@ -1,0 +1,57 @@
+{% extends "layout.twig" %}
+
+{% block content %}
+	
+	<div class="inner">
+		<div class="big_box">
+			<div class="btn-group pull-right">
+				<button type="button" class="btn btn-fit-height btn-grey dropdown-toggle" dropdown-toggle" data-toggle="dropdown" data-delay="1000" data-close-others="true">
+					{{ 'Actions' }} <i class="fa fa-angle-down"></i>
+				</button>
+				<ul class="dropdown-menu pull-right" role="menu">
+					<li><a href="{{ this.route.generate('add_field_groups') }}" data-toggle="modal" data-target="#ajax_modal" >New Group</a></li>
+				</ul>
+			</div>
+			
+			<h3 class="box-title">
+				{{ page_title }}
+			</h3>
+			
+			
+			<!-- END PAGE HEADER-->
+			<table class="table ">
+				<thead class="flip-content">
+					<tr>
+						<th> Title</th>
+						<th width="100px"> Fields </th>
+						<th class="numeric" width="100px" style="text-align:center"> Options </th>
+					</tr>
+				</thead>
+				<tbody>
+				{% for ind,group in groups %}
+					<tr style="vertical-align:bottom">
+						<td style="vertical-align:middle"> 
+							<a href="{{ this.route.generate('custom_fields' , {'id' : group.id }) }}">{{ group.name }}</a>
+						</td>
+						<td class="numeric" style="vertical-align:middle"> {{ group.fields }} </td>
+						<td class="numeric" style="vertical-align:middle; text-align:center;">
+							<div class="btn-group ">
+								<button type="button" class="btn btn-sm btn-blue dropdown-toggle" data-toggle="dropdown" data-delay="1000" data-close-others="true">
+									{{ 'Actions' }} <i class="fa fa-angle-down"></i>
+								</button>
+								<ul class="dropdown-menu pull-right" role="menu">
+								 <li><a href="{{ this.route.generate('edit_field_group' , {'id' : group.id }) }}" data-toggle="modal" data-target="#ajax_modal" >{{ 'Edit' }}</a></li>
+								 <li><a href="{{ this.route.generate('custom_fields' , {'id' : group.id }) }}" >{{ 'View fields' }}</a></li>
+								 <li><a href="/go_user_ce/CheckActionIfAllowed/delete/{{ user.user_id }}/{{user.user}}" onclick="return confirm('Are you sure ?')" >{{ 'Remove' }}</a></li>
+								 </ul>
+							</div>
+						</td>
+					</tr>
+				{% endfor %}
+				</tbody>
+			</table>
+		</div>
+	</div>
+{% endblock %}
+
+
