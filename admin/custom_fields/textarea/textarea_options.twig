@@ -1,0 +1,17 @@
+<div class="form-group">
+	<label class="control-label col-md-3">Textarea Rows</label>
+	<div class="col-md-9">
+		<input type="text" class="form-control" name="data[options][textarea][rows]" value="{{ rows ? rows : 5}}" style="width:100px">
+	</div>
+</div>
+<div class="form-group">
+	<label class="control-label col-md-3">Default formating</label>
+	<div class="col-md-9">
+		<select class="bs-select " name="data[options][textarea][formating]">
+			<option value="none" {{ formating == 'none' ? 'selected' : '' }}>None</option>
+			<option value="br" {{ formating == 'br' ? 'selected' : '' }}>Auto break line</option>
+			<option value="p" {{ formating == 'p' ? 'selected' : '' }}>Auto paragraph</option>
+			<option value="xhtml" {{formating == 'xhtml' ? 'selected' : '' }}>XHTML</option>
+		</select>
+	</div>
+</div>

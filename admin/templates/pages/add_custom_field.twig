@@ -4,7 +4,7 @@
 	
 	
 	<div class="inner">
-		<form class="form-horizontal ajax_form" action="{{ this.route.generate('add_custom_field' , {'id' : group.id }) }}" method="post">
+		<form class="form-horizontal ajax_form" action="{{ this.route.generate('custom_field_add' , {'id' : group.id }) }}" method="post">
 			<div class="left_big">
 				<div class="big_box">
 					
@@ -19,7 +19,7 @@
 								
 								<select class="bs-select " id="custom_field_type" name="data[type]">
 								{% for type in field_types %}
-									<option value="{{ type.label }}">{{ type.name }}</option>
+									<option value="{{ type.label }}" data-multilang="{{ type.obj.has_multilang ? 1 : 0}}">{{ type.name }}</option>
 								{% endfor %}	
 								</select>
 								
@@ -68,100 +68,12 @@
 					</h3>
 					
 					<div class="form-body">
-						
-						<div class="field_options" data-type="text">
-							<div class="form-group">
-								<label class="control-label col-md-3">Maximum length</label>
-								<div class="col-md-9">
-									<input type="text" class="form-control" name="data[options][text][max_length]" style="width:100px" value="100">
-								</div>
-							</div>
+						{% for type in field_types %}
+						<div class="field_options" data-type="{{ type.label }}">
+							{{ type.obj.get_options(field.options[type.label]) }}
 						</div>
-						
-						<div class="field_options" data-type="textarea">
-							<div class="form-group">
-								<label class="control-label col-md-3">Textarea Rows</label>
-								<div class="col-md-9">
-									<input type="text" class="form-control" name="data[options][textarea][rows]" style="width:100px" value="5">
-								</div>
-							</div>
-							<div class="form-group">
-								<label class="control-label col-md-3">Default formating</label>
-								<div class="col-md-9">
-									<select class="bs-select " id="custom_field_type" name="data[options][textarea][formating]">
-										<option value="none">None</option>
-										<option value="br">Auto break line</option>
-										<option value="p">Auto paragraph</option>
-										<option value="xhtml">XHTML</option>
-									</select>
-								</div>
-							</div>
-						</div>
-						
-						<div class="field_options" data-type="rich_textarea">
-							<div class="form-group">
-								<label class="control-label col-md-3">Textarea height</label>
-								<div class="col-md-9">
-									<input type="text" class="form-control" name="data[options][rich_textarea][height]" style="width:100px" value="300">
-								</div>
-							</div>
-						</div>
-						
-						<div class="field_options" data-type="checkbox">
-							<div class="form-group">
-								<label class="control-label col-md-3">Options</label>
-								<div class="col-md-9">
-									<textarea class="form-control" name="data[options][checkbox][options]"></textarea>
-									<span class="help-block">
-										Put each item on a single line 
-									</span>
-								</div>
-							</div>
-						</div>
-						
-						<div class="field_options" data-type="radio">
-							<div class="form-group">
-								<label class="control-label col-md-3">Options</label>
-								<div class="col-md-9">
-									<textarea class="form-control" name="data[options][radio][options]"></textarea>
-									<span class="help-block">
-										Put each item on a single line 
-									</span>
-								</div>
-							</div>
-						</div>
-						
-						<div class="field_options" data-type="select">
-							<div class="form-group">
-								<label class="control-label col-md-3">Options</label>
-								<div class="col-md-9">
-									<textarea class="form-control" name="data[options][select][options]"></textarea>
-									<span class="help-block">
-										Put each item on a single line 
-									</span>
-								</div>
-							</div>
-						</div>
-						
-						<div class="field_options" data-type="file">
-							<div class="form-group">
-								<label class="control-label col-md-3">Save Path</label>
-								<div class="col-md-9">
-									<input type="text" class="form-control" name="data[options][file][path]" value="/upload/">
-								</div>
-							</div>
-						</div>
-						
+						{% endfor %}
 					</div>
-					<div class="form-actions">
-						<div class="row">
-							<div class="col-md-offset-3 col-md-9">
-								<button class="btn btn-blue" type="submit"><i class="fa fa-check"></i> Save</button>
-								<button class="btn btn-default" type="button">Cancel</button>
-							</div>
-						</div>
-					</div>
-					
 				</div>
 			</div>
 			
@@ -176,7 +88,7 @@
 					<div class="portlet-body form">
 						<div class="form-body">
 							
-							<div class="form-group short-group">
+							<div class="form-group short-group" id="multilang_check">
 								<label class="control-label ">Multilanguage</label>
 								<div >
 									<label style="margin:0 15px 0 0">

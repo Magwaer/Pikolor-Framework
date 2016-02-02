@@ -1,0 +1,18 @@
+<div class="form-group">
+	<label class="control-label col-md-3">{{ name }}</label>
+	<div class="col-md-9">
+		{% if this.is_multilang  and multilang %}
+			{% for key,lang in this.config.general.langs %}
+				<div role="lang" data-lang="{{ key }}">
+					<input type="text" placeholder="{{ lang }}" class="form-control" value="{{ value[key] }}" name="data[{{ label }}][{{ key }}]">
+				</div>
+			{% endfor %}
+		{% else %}
+		<input type="text" placeholder="" class="form-control" name="data[{{ label }}]" value="{{ value }}" >
+		{% endif %}
+		
+		{% if info %}
+		<span class="help-block">{{ info }}</span>
+		{% endif %}
+	</div>
+</div>

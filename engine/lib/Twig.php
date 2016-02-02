@@ -53,7 +53,9 @@ class Twig {
 	 * @var Twig_Envoronment object
 	 */
 	private $_twig_env;
-
+	
+	public $loader ;
+	
 	/**
 	 * constructor of twig ci class
 	 */
@@ -71,8 +73,8 @@ class Twig {
 		$this->template_dir = APP_PATH . "templates";
 		$this->cache_dir = ENGINE_PATH . "cache" . DS . "templates";
 		// load environment
-		$loader = new Twig_Loader_Filesystem($this->template_dir, $this->cache_dir);
-		$this->_twig_env = new Twig_Environment($loader, array(
+		$this->loader = new Twig_Loader_Filesystem($this->template_dir, $this->cache_dir);
+		$this->_twig_env = new Twig_Environment($this->loader, array(
 			'debug' => true,
 			'cache' => $this->cache_dir,
 			'auto_reload' => TRUE));

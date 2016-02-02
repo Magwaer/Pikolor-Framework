@@ -31,6 +31,9 @@ if (!defined('ADR'))
 if (!defined('ENGINE_PATH'))
 	define('ENGINE_PATH', ROOT . DS . 'engine' . DS );
 
+if (!defined('ADMIN_PATH'))
+	define('ADMIN_PATH', ROOT . DS . 'admin' . DS );
+
 require_once(ENGINE_PATH . 'core' . DS . "Core.php");
 
 $pikolor = new pikolor_core();

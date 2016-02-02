@@ -1,0 +1,10 @@
+<div class="form-group">
+	<label class="control-label col-md-3">{{ name }}</label>
+	<div class="col-md-9">
+		<select  name="data[{{ label }}]" class="bs-select " >
+			{% for option in options %}
+				<option value="{{ option}}" {{ option == value ? 'selected' : '' }}/>{{ option}}</option>
+			{% endfor %}
+		</select>
+	</div>
+</div>

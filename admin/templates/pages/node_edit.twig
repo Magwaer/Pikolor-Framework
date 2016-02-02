@@ -9,7 +9,7 @@
 	
 	
 	<div class="inner">
-		<form class="form-horizontal form-bordered form-row-stripped" action="#">
+		<form class="form-horizontal form-bordered form-row-stripped ajax_form" action="{{ this.route.generate('node_edit' , {'id' : this_node.id }) }}" method="post">
 			<div class="left_big">
 				<div class="big_box">
 					<div class="btn-group pull-right">
@@ -17,8 +17,8 @@
 							{{ 'Actions' }} <i class="fa fa-angle-down"></i>
 						</button>
 						<ul class="dropdown-menu pull-right" role="menu">
-							<li><a href="#" data-toggle="modal" data-target="#ajax_modal" >Dublicate Node</a></li>
-							<li><a href="#" data-toggle="modal" data-target="#ajax_modal" >Remove Node</a></li>
+							<!-- <li><a href="#" data-toggle="modal" data-target="#ajax_modal" >Dublicate Node</a></li> -->
+							<li><a href="{{ this.route.generate('node_delete', {'id' : this_node.id }) }}" onclick="return Admin.delete_node($(this))" >Remove Node</a></li>
 						</ul>
 					</div>
 			
@@ -28,34 +28,25 @@
 		
 					<div class="form-body">
 						<div class="form-group">
-							<label class="control-label col-md-3">First Name</label>
+							<label class="control-label col-md-3">Title</label>
 							<div class="col-md-9">
+								{% if this.is_multilang %}
+									{% for key,lang in this.config.general.langs %}
+										<div role="lang" data-lang="{{ key }}">
+											<input type="text" placeholder="{{ lang }}" name="data[title][{{ key }}]" value="{{ this_node.title[key]	}}"  class="form-control" >
+										</div>
+									{% endfor %}
+								{% else %}
+								<input type="text" placeholder="" name="data[title]" class="form-control" value="{{ this_node.title }}" >
+								{% endif %}
 								
-								<div role="lang" data-lang="ro">
-									<input type="text" placeholder="ro ro ro " class="form-control" >
-								</div>
-								<div role="lang" data-lang="ru">
-									<input type="text" placeholder="ru ru ru " class="form-control" >
-								</div>
-							
 								
-							</div>
-						</div>
-						<div class="form-group">
-							<label class="control-label col-md-3">Last Name</label>
-							<div class="col-md-9">
-								<input type="text" class="form-control" placeholder="medium">
-								<span class="help-block">
-								This is inline help </span>
 							</div>
 						</div>
 						
-						<div class="form-group">
-							<label class="control-label col-md-3">Street</label>
-							<div class="col-md-9">
-								<input type="text" class="form-control">
-							</div>
-						</div>
+						{% for field in fields %}
+							{{ field.get_html() }}
+						{% endfor %}
 						
 					</div>
 					<div class="form-actions">
@@ -66,14 +57,11 @@
 							</div>
 						</div>
 					</div>
-
 					
 				</div>
 			</div>
 			
 			<div class="small_right">
-			
-			
 				<div class="big_box">
 					<h3 class="box-title">
 						Options
@@ -81,27 +69,37 @@
 					
 					<div class="portlet-body form">
 						<div class="form-body">
-
+							
+							{% if is_multilang %}
 							<div class="form-group short-group">
 								<label class="control-label">Language</label>
 								<select class="bs-select " data-width="100%" id="lang_switcher">
-									<option value="ro">Română</option>
-									<option value="ru">Руский</option>
+									{% for key,lang in langs %}
+									<option value="{{ key }}">{{ lang }}</option>
+									{% endfor %}
 								</select>
 							</div>
-
+							{% endif %}
+							
 							<div class="form-group short-group">
 								<label class="control-label" >
-									<input type="checkbox" {{ this_node.status == 'active' ? 'checked' : '' }} class="make-switch" data-on-color="success" data-off-color="warning">
+									<input type="checkbox" name="option[status]" value="active" {{ this_node.status == 'active' ? 'checked' : '' }} >
 									Published
+								</label>
+							</div>
+							
+							<div class="form-group short-group">
+								<label class="control-label" >
+									<input type="checkbox" name="option[home_page]" value="1" {{ this_node.home_page == 1 ? 'checked' : '' }} >
+									Home pages
 								</label>
 							</div>
 							
 							{% import "./helper/form.twig" as form_helper %}
 							<div class="form-group short-group">
 								<label class="control-label ">Template</label>
-								<select class="bs-select" data-width="100%">
-									{{ form_helper.node_templates(templates, 0) }}
+								<select class="bs-select" data-width="100%" name="option[template]" >
+									{{ form_helper.node_templates(templates, 0, this_node.template) }}
 								</select>
 							</div>
 							
@@ -121,6 +119,7 @@
 				</div>
 				<div class="space-20"></div>
 			</div>
+			<input type="hidden" name="ac" value="save" />
 		</form>
 	</div>
 {% endblock %}

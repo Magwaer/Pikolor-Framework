@@ -9,7 +9,7 @@
 					{{ 'Actions' }} <i class="fa fa-angle-down"></i>
 				</button>
 				<ul class="dropdown-menu pull-right" role="menu">
-					<li><a href="{{ this.route.generate('add_field_groups') }}" data-toggle="modal" data-target="#ajax_modal" >New Group</a></li>
+					<li><a href="{{ this.route.generate('fields_group_add') }}" data-toggle="modal" data-target="#ajax_modal" >New Group</a></li>
 				</ul>
 			</div>
 			
@@ -40,9 +40,9 @@
 									{{ 'Actions' }} <i class="fa fa-angle-down"></i>
 								</button>
 								<ul class="dropdown-menu pull-right" role="menu">
-								 <li><a href="{{ this.route.generate('edit_field_group' , {'id' : group.id }) }}" data-toggle="modal" data-target="#ajax_modal" >{{ 'Edit' }}</a></li>
+								 <li><a href="{{ this.route.generate('fields_group_edit' , {'id' : group.id }) }}" data-toggle="modal" data-target="#ajax_modal" >{{ 'Edit' }}</a></li>
 								 <li><a href="{{ this.route.generate('custom_fields' , {'id' : group.id }) }}" >{{ 'View fields' }}</a></li>
-								 <li><a href="/go_user_ce/CheckActionIfAllowed/delete/{{ user.user_id }}/{{user.user}}" onclick="return confirm('Are you sure ?')" >{{ 'Remove' }}</a></li>
+								 <li><a href="{{ this.route.generate('fields_group_delete' , {'id' : group.id }) }}"  onclick="return Admin.delete_group($(this))" >{{ 'Remove' }}</a></li>
 								 </ul>
 							</div>
 						</td>

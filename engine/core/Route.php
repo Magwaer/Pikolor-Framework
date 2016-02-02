@@ -139,4 +139,10 @@ class pikolor_route extends pikolor_core{
 		header('Location: ' . $link);
 		die();
 	}
+	
+	public function get_this_url()
+	{
+		$tmp = explode("?" , $_SERVER['REQUEST_URI']);
+		return $tmp[0];
+	}
 }

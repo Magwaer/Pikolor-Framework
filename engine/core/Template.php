@@ -66,10 +66,25 @@ class pikolor_template extends APP_Controller{
 	* @render a specific template
 	* @param string $template
 	*/
-	function renderTemplate($template)
+	function renderTemplate($template, $return = false)
 	{
 		$page = $this->twig->render($template , $this->vars );
-		echo $page;
+		if (!$return)
+			echo $page;
+		else
+			return $page;
+	}
+	
+	/**
+	* @render a specific template
+	* @param string $template
+	*/
+	function getTemplate($template, $vars = array())
+	{
+		if (!count($vars))
+			$vars = $this->vars ;
+		$page = $this->twig->render($template , $vars );
+		return $page;
 	}
 	
 	function __destruct()

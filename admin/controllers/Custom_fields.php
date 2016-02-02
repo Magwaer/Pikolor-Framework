@@ -24,7 +24,7 @@ class Custom_fields extends Admin{
 
 	public function show_groups()
 	{
-		$groups = $this->get_grops();
+		$groups = $this->get_groups();
 		$this->to_template("groups", $groups);
 		
 		$this->to_template("page", "custom_fields" );
@@ -73,7 +73,7 @@ class Custom_fields extends Admin{
 			echo json_encode($res);
 			die();
 		}
-		$this->to_template("form_action", $this->route->generate('add_field_groups'));
+		$this->to_template("form_action", $this->route->generate('fields_group_add'));
 		$this->to_template("action", "add");
 		$this->to_template("page", "custom_fields" );
 		$this->to_template("tab", "templates");
@@ -106,10 +106,39 @@ class Custom_fields extends Admin{
 			die();
 		}
 		$this->to_template("group", $group);
-		$this->to_template("form_action", $this->route->generate('edit_field_group', array("id" => $id)));
+		$this->to_template("form_action", $this->route->generate('fields_group_edit', array("id" => $id)));
 		$this->to_template("action", "edit");
 		$this->to_template("page_title", "Edit custom fields group");
 		$this->renderTemplate("ajax/field_group.twig");
+	}
+	
+	public function delete_group($id)
+	{
+		$group = $this->fields_model->get_group_by_id($id);
+		if (!$group['id'])
+			$this->route->go("error_500");
+		
+		$fields = $this->fields_model->get_fields_by_group($id);
+		foreach($fields as $field)
+		{
+			$field['path'] = realpath(ADMIN_PATH . $field['path'] . "custom_field_" . $field['label'] . ".php");
+			if (file_exists($field['path']))
+			{
+				require_once($field['path']);
+				$class = 'custom_field_' . $field['label'];
+				$instance = new $class;
+				$instance->path = dirname($field['path']);
+				$instance->set_config($this->config);
+				$instance->init();
+				$instance	->set_data($field);
+				$instance->delete_field($id);
+			}
+			else	
+				$this->fields_model->delete_field($field['id']);
+		}
+		$this->fields_model->delete_group($id);
+		
+		$this->route->go("fields_groups");
 	}
 	
 	public function add_custom_field($group_id)
@@ -148,6 +177,7 @@ class Custom_fields extends Admin{
 			$this->try_edit_custom_field($data);
 		}
 		$field_types = $this->fields_model->get_field_types();
+		
 		$this->to_template("field_types", $field_types);
 		$this->to_template("field", $field);
 		$this->to_template("page", "custom_fields" );
@@ -156,7 +186,30 @@ class Custom_fields extends Admin{
 		$this->renderTemplate("pages/edit_custom_field.twig");
 	}
 	
-	private function get_grops()
+	public function detele_custom_field($id)
+	{
+		$field = $this->fields_model->get_field_by_id($id);
+		if (!isset($field['id']))
+			$this->route->go("error_500");
+		
+		$field['path'] = realpath(ADMIN_PATH . $field['path'] . "custom_field_" . $field['type'] . ".php");
+		if (file_exists($field['path']))
+		{
+			require_once($field['path']);
+			$class = 'custom_field_' . $field['type'];
+			$instance = new $class;
+			$instance->path = dirname($field['path']);
+			$instance->set_config($this->config);
+			$instance->init();
+			$instance	->set_data($field);
+			$instance->delete_field($id);
+		}
+		else	$this->fields_model->delete_field($field_id);
+		
+		$this->route->go("custom_fields" , array("id" => $field['group_id']));
+	}
+	
+	private function get_groups()
 	{
 		$channel = $this->fields_model->get_groups();
 		return $channel;
@@ -169,7 +222,7 @@ class Custom_fields extends Admin{
 			$res['error'] = "Too short name";
 		elseif (strlen(trim($data['label'])) < 2)
 			$res['error'] = "Too short label";
-		{
+		else{
 			$exists = $this->fields_model->get_field_by_label($data['label']);
 			if (isset($exists['id']) && $exists['id'])
 				$res['error'] = "This label allready exists. Please choose another one";
@@ -192,7 +245,7 @@ class Custom_fields extends Admin{
 			$res['error'] = "Too short name";
 		elseif (strlen(trim($data['label'])) < 2)
 			$res['error'] = "Too short label";
-		{
+		else{
 			$exists = $this->fields_model->get_field_by_label($data['label']);
 			if (isset($exists['id']) && $exists['id'] != $data['id'])
 				$res['error'] = "This label allready exists. Please choose another one";

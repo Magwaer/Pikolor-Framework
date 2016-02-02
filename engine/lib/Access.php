@@ -17,10 +17,10 @@ class Access extends Model{
 	public $use_password = true;
 	public $is_locked = false;
 	
-	public function __construct($db)
+	public function __construct($db, $config)
 	{
 		$this->check_cookies();
-		parent::__construct($db);
+		parent::__construct($db, $config);
 	}
 	
 	/**

@@ -9,7 +9,7 @@
 					{{ 'Actions' }} <i class="fa fa-angle-down"></i>
 				</button>
 				<ul class="dropdown-menu pull-right" role="menu">
-					<li><a href="{{ this.route.generate('add_field_groups') }}" data-toggle="modal" data-target="#ajax_modal" >New Group</a></li>
+					<li><a href="{{ this.route.generate('add_channel') }}" data-toggle="modal" data-target="#ajax_modal" >New Channel</a></li>
 				</ul>
 			</div>
 			
@@ -22,28 +22,27 @@
 			<table class="table ">
 				<thead class="flip-content">
 					<tr>
-						<th> Title</th>
-						<th width="100px"> Fields </th>
+						<th>Title</th>
+						<th width="20%">Custom Fields</th>
 						<th class="numeric" width="100px" style="text-align:center"> Options </th>
 					</tr>
 				</thead>
 				<tbody>
-				{% for ind,group in groups %}
+				{% for channel in channels %}
 					<tr style="vertical-align:bottom">
 						<td style="vertical-align:middle"> 
-							<a href="{{ this.route.generate('custom_fields' , {'id' : group.id }) }}">{{ group.name }}</a>
+							<a href="{{ this.route.generate('channel' , {'id' : channel.id }) }}">{{ channel.name }}</a>
 						</td>
-						<td class="numeric" style="vertical-align:middle"> {{ group.fields }} </td>
+						<td class="numeric" style="vertical-align:middle"> {{ channel.fields }} </td>
 						<td class="numeric" style="vertical-align:middle; text-align:center;">
 							<div class="btn-group ">
 								<button type="button" class="btn btn-sm btn-blue dropdown-toggle" data-toggle="dropdown" data-delay="1000" data-close-others="true">
 									{{ 'Actions' }} <i class="fa fa-angle-down"></i>
 								</button>
 								<ul class="dropdown-menu pull-right" role="menu">
-								 <li><a href="{{ this.route.generate('edit_field_group' , {'id' : group.id }) }}" data-toggle="modal" data-target="#ajax_modal" >{{ 'Edit' }}</a></li>
-								 <li><a href="{{ this.route.generate('custom_fields' , {'id' : group.id }) }}" >{{ 'View fields' }}</a></li>
-								 <li><a href="/go_user_ce/CheckActionIfAllowed/delete/{{ user.user_id }}/{{user.user}}" onclick="return confirm('Are you sure ?')" >{{ 'Remove' }}</a></li>
-								 </ul>
+									<li><a href="{{ this.route.generate('edit_channel' , {'id' : channel.id }) }}" data-toggle="modal" data-target="#ajax_modal" >{{ 'Edit' }}</a></li>
+									<li><a href="{{ this.route.generate('delete_channel' , {'id' : channel.id }) }}" onclick="return Admin.delete_channel($(this))"  >{{ 'Remove' }}</a></li>
+								</ul>
 							</div>
 						</td>
 					</tr>

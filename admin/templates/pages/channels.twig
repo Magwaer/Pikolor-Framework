@@ -15,7 +15,7 @@
 					{{ 'Actions' }} <i class="fa fa-angle-down"></i>
 				</button>
 				<ul class="dropdown-menu pull-right" role="menu">
-					<li><a href="#" data-toggle="modal" data-target="#ajax_modal" >New Node</a></li>
+					<li><a href="{{ this.route.generate('node_add', {'channel' : this_channel.id }) }}" >New Node</a></li>
 				</ul>
 			</div>
 			
@@ -29,8 +29,7 @@
 				<thead class="flip-content">
 					<tr>
 						<th> Title</th>
-						<th width="100px"> Template </th>
-						<th class="numeric" width="100px"> Views </th>
+						<th width="150px"> Template </th>
 						<th class="numeric" width="100px"> Status </th>
 						<th class="numeric" width="100px"> Options </th>
 					</tr>
@@ -39,12 +38,15 @@
 				{% for ind,node in nodes %}
 					<tr style="vertical-align:bottom">
 						<td style="vertical-align:middle"> 
-							<a href="/admin/node_edit/{{ node.id }}">{{ node.title }}</a>
+							<a href="{{ this.route.generate('node_edit', {'id' : node.id }) }}">{{ node.title }}</a>
 						</td>
-						<td style="vertical-align:middle"> page </td>
-						<td class="numeric" style="vertical-align:middle"> 14 </td>
+						<td style="vertical-align:middle">{{ node.template_name }}</td>
 						<td class="numeric" style="vertical-align:middle">
-							<span class="label label-sm label-success">Pending</span>
+							{% if node.status == 'active' %}
+							<span class="label label-sm label-success">Active</span>
+							{% else %}
+							<span class="label label-sm label-warning">Pending</span>
+							{% endif %}
 						</td>
 						<td class="numeric" style="vertical-align:middle">
 							<div class="btn-group pull-right">
@@ -52,10 +54,9 @@
 									{{ 'Actions' }} <i class="fa fa-angle-down"></i>
 								</button>
 								<ul class="dropdown-menu pull-right" role="menu">
-								 <li><a href="/go_user_ce/CheckActionIfAllowed/update/{{ user.user_id }}" data-toggle="modal" data-target="#ajax_modal" >{{ 'Edit' }}</a></li>
-								 <li><a href="/go_user_ce/CheckActionIfAllowed/delete/{{ user.user_id }}/{{user.user}}" onclick="return confirm('Are you sure ?')" >{{ 'Remove' }}</a></li>
-								 <li><a href="/go_user_ce/userinfo/{{ user.user_id }}/{{user.user}}" data-toggle="modal" data-target="#ajax_modal" >{{ 'Info' }}</a></li>
-								 </ul>
+									<li><a href="{{ this.route.generate('node_edit', {'id' : node.id }) }}"  >{{ 'Edit' }}</a></li>
+									<li><a href="{{ this.route.generate('node_delete', {'id' : node.id }) }}" onclick="return Admin.delete_node($(this))" >{{ 'Remove' }}</a></li>
+								</ul>
 							</div>
 						</td>
 					</tr>

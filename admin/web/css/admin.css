@@ -166,6 +166,40 @@ body{
 	float:left;
 	width:280px;
 }
+@media (max-width: 600px){
+	#sidebar{
+		width:36px;
+		transition:all 0.4s ease 0s;
+	}
+	#sidebar:hover{
+		width:200px;
+	}
+	#sidebar .scroll .cap{
+		padding:10px 15px 10px 40px;
+		transition:all 0.4s ease 0s;
+	}
+	#sidebar:hover .scroll .cap{
+		padding:10px 15px;
+	}
+	#sidebar .scroll ul li.active .sub-menu{
+		max-height:0;
+	}
+	#sidebar:hover .scroll ul li.active .sub-menu{
+		max-height:500px;
+	}
+	#sidebar .side_footer{
+		display:none;
+	}
+	#container{
+		padding:60px 0 0 30px
+	}
+	#content .left_big,#content .small_right{
+		min-width:auto;
+		max-width:auto;
+		width:auto;
+		float:none;
+	}
+}
 .btn-blue{
 	/*
 	background-image: linear-gradient(to bottom, #5bc0de 0px, #2aabd2 100%);

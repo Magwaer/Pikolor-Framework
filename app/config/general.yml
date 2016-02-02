@@ -1,4 +1,6 @@
 
 debugger : 0
 errors : 1
-langs :
+langs : 
+	ro : Romana
+	ru : Ruskii

@@ -25,7 +25,7 @@
 						<ul class="sub-menu">
 							{% for channel in channels %}
 							<li class="{% if page == 'channel_' ~ channel.id %}active{% endif %}">
-								<a href="{{ this.route.generate('channel' ,{'id' : channel.id }) }}">{{ channel.title }}</a>
+								<a href="{{ this.route.generate('channel' ,{'id' : channel.id }) }}">{{ channel.name }}</a>
 							</li>
 							{% endfor %}
 						</ul>
@@ -42,7 +42,7 @@
 								<a href="{{ this.route.generate('template_manager') }}">Templates manager</a>
 							</li>
 							<li class="{% if page == 'channels'%}active{% endif %}">
-								<a href="{{ this.route.generate('manage_channels') }}">Channles</a>
+								<a href="{{ this.route.generate('manage_channels') }}">Channels</a>
 							</li>
 							<li class="{% if page == 'custom_fields'%}active{% endif %}">
 								<a href="{{ this.route.generate('fields_groups') }}">Custom fields</a>

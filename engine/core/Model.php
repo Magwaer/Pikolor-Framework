@@ -12,10 +12,16 @@
 
 class Model {
 	public $db;
+	public $config;
+	public $is_multilang;
 	
-	function __construct($db)
+	function __construct($db, $config)
 	{
 		$this->db = $db;
+		$this->config = $config;
+		
+		if (is_array($this->config['general']['langs']))
+			$this->is_multilang = true;
 	}
 }
 

@@ -81,7 +81,7 @@ class pikolor_core {
 				$s_file = strtolower($file);
 			
 				if ($type == "models")
-					$this->$s_file = new $file($this->db);
+					$this->$s_file = new $file($this->db, $this->config);
 				else
 					$this->$s_file = new $file();
 			}
@@ -92,7 +92,7 @@ class pikolor_core {
 	}
 	
 	/**
-	* @Just init CORE
+	* @Just init CORE. This is magic :)
 	*/
 	public function init_core(){
 		removeMagicQuotes();
@@ -124,7 +124,7 @@ class pikolor_core {
 	function init_app(){
 		$this->route->find_route();
 		
-		if ($this->route->action)
+		if ($this->route->action) // Searching a controller and a route
 		{
 			$app_class = $this->route->class_name;
 			$app_method = $this->route->method_name;
@@ -147,6 +147,15 @@ class pikolor_core {
 					$obj->init(); 
 				}
 			}
+		}
+		else { // Searching in DB so content
+			$app = new APP_Controller();
+			$app->set_config($this->config);
+			$app->init(); 
+			
+			$url = $this->route->get_this_url();
+			$node = $app->db->where("link", $url)->getOne("p_nodes");
+			$app->renderTemplate($node['template']);
 		}
 	}
 	
@@ -224,6 +233,7 @@ class pikolor_core {
 	{
 		$this->template->twig->register_global($name, $obj);
 	}
+	
 }
 
 

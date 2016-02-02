@@ -1,11 +1,17 @@
 
-home:
-    url: /admin/
-    action: Home
+# Error pages
 
 error_500:
     url: /admin/error_500
     action: Admin:error_500
+
+
+
+# First pages
+
+home:
+    url: /admin/
+    action: Home
 
 lock_screen:
     url: /admin/locked
@@ -23,38 +29,85 @@ dashboard:
     url: /admin/dashboard
     action: Home:dashboard
 
+
+
+# Channels 
+
+manage_channels:
+    url: /admin/manage_channels
+    action: Channels:manage_channels
+
+add_channel:
+    url: /admin/add_channel
+    action: Channels:add_channel
+
+edit_channel:
+    url: /admin/edit_channel/:id
+    action: Channels:edit_channel
+
+delete_channel:
+    url: /admin/delete_channel/:id
+    action: Channels:delete_channel
+
+
+
+# Nodes
+
 channel:
     url: /admin/channel/:id
     action: Channels:list_channel
+
+node_add:
+    url: /admin/node_add/:channel
+    action: Nodes:add_node
 
 node_edit:
     url: /admin/node_edit/:id
     action: Nodes:edit_node
 
+node_delete:
+    url: /admin/node_delete/:id
+    action: Nodes:delete_node
+
+
+
+
+# Custom fields groups 
+
 fields_groups:
     url: /admin/fields_groups
     action: Custom_fields:show_groups
 
-add_field_groups:
+fields_group_add:
     url: /admin/add_field_group
     action: Custom_fields:add_group
 
-edit_field_group:
+fields_group_edit:
     url: /admin/edit_field_group/:id
     action: Custom_fields:edit_group
+
+fields_group_delete:
+    url: /admin/delete_field_group/:id
+    action: Custom_fields:delete_group
+
+
+
+# Custom fields
 
 custom_fields:
     url: /admin/custom_fields/:id
     action: Custom_fields:show_fields
 
-add_custom_field:
+custom_field_add:
     url: /admin/add_custom_field/:id
     action: Custom_fields:add_custom_field
 
-edit_custom_field:
+custom_field_edit:
     url: /admin/edit_custom_field/:id
     action: Custom_fields:edit_custom_field
 
-manage_channels:
-    url: /admin/manage_channels
-    action: Channels:manage_channels
+custom_field_delete:
+    url: /admin/delete_custom_field/:id
+    action: Custom_fields:detele_custom_field
+
+

@@ -9,7 +9,7 @@
 					{{ 'Actions' }} <i class="fa fa-angle-down"></i>
 				</button>
 				<ul class="dropdown-menu pull-right" role="menu">
-					<li><a href="{{ this.route.generate('add_custom_field' , {'id' : group.id }) }}" >New Custom Field</a></li>
+					<li><a href="{{ this.route.generate('custom_field_add' , {'id' : group.id }) }}" >New Custom Field</a></li>
 				</ul>
 			</div>
 			
@@ -31,7 +31,7 @@
 				{% for ind,field in fields %}
 					<tr style="vertical-align:bottom">
 						<td style="vertical-align:middle"> 
-							<a href="{{ this.route.generate('edit_custom_field' , {'id' : field.id }) }}">{{ field.name }}</a>
+							<a href="{{ this.route.generate('custom_field_edit' , {'id' : field.id }) }}">{{ field.name }}</a>
 						</td>
 						<td class="numeric" style="vertical-align:middle"> {{ field.type_name }} </td>
 						<td class="numeric" style="vertical-align:middle">
@@ -40,8 +40,8 @@
 									{{ 'Actions' }} <i class="fa fa-angle-down"></i>
 								</button>
 								<ul class="dropdown-menu pull-right" role="menu">
-									<li><a href="{{ this.route.generate('edit_custom_field' , {'id' : field.id }) }}" >{{ 'Edit' }}</a></li>
-									<li><a href="/go_user_ce/CheckActionIfAllowed/delete/{{ user.user_id }}/{{user.user}}" onclick="return confirm('Are you sure ?')" >{{ 'Remove' }}</a></li>
+									<li><a href="{{ this.route.generate('custom_field_edit' , {'id' : field.id }) }}" >{{ 'Edit' }}</a></li>
+									<li><a href="{{ this.route.generate('custom_field_delete' , {'id' : field.id }) }}" onclick="return Admin.delete_field($(this))" >{{ 'Remove' }}</a></li>
 								</ul>
 							</div>
 						</td>

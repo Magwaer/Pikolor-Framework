@@ -39,7 +39,7 @@ class APP_Controller extends pikolor_core{
 			$this->init_db();
 			
 			$this->load("lib" , "Access" , false);
-			$this->access = new Access($this->db);
+			$this->access = new Access($this->db, $this->config);
 			
 			$this->template = new pikolor_template();
 			$this->template->config = $this->config;
