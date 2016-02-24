@@ -20,7 +20,7 @@ class Custom_field extends APP_Controller{
 	public function init()
 	{
 		parent::init();
-		$this->template->twig->loader->addPath($this->path);
+		//$this->template->twig->loader->addPath($this->path);
 		
 		if (is_array($this->config['general']['langs']))
 			$this->is_multilang = true;
@@ -36,7 +36,7 @@ class Custom_field extends APP_Controller{
 	public function get_options($options = array())
 	{
 		$field_data = $this->get_data();
-		echo  $this->getTemplate((isset($field_data['type']) ? $field_data['type'] : $field_data['label']) . "_options.twig", $options);
+		echo  $this->getTemplate("/admin/custom_fields/" . (isset($field_data['type']) ? $field_data['type'] . "/" . $field_data['type'] : $field_data['label'] . "/" . $field_data['label']) . "_options.twig", $options);
 	}
 	
 	public function set_data($data)
@@ -52,22 +52,18 @@ class Custom_field extends APP_Controller{
 			return $this->data[$key];
 	}
 	
-	public function save_data($data, $node_id)
+	public function get_field_value()
 	{
-		$field_data = $this->get_data();
-		if ($field_data['multilang'])
-		{
-			foreach($data as $lang => $value)
-			{
-				$arr = array("node_id" => $node_id, "field_id" => $field_data['id'], "label" => $field_data['label'] , "lang" => $lang, "value" => $value);
-				$this->db->replace("p_node_fields" , $arr);
-			}
-		}
+		$data = $this->get_data();
+		if ($data['multilang'])
+			return $data['value'][$_SESSION['lang']];
 		else
-		{
-			$arr = array("node_id" => $node_id, "field_id" => $field_data['id'], "label" => $field_data['label'] , "lang" => "", "value" => $data);
-			$this->db->replace("p_node_fields" , $arr);
-		}
+			return $data['value'];
+	}
+	
+	public function prepare_data($data, $node_id)
+	{
+		return $data;
 	}
 	
 	public function delete_field($field_id)

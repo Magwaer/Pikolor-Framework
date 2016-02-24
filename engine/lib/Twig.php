@@ -1,4 +1,5 @@
-<?php if ( ! defined('APP_PATH')) exit('No direct script access allowed');
+<?php
+// if ( ! defined('APP_PATH')) exit('No direct script access allowed');
 /**
  * Library to wrap Twig layout engine. Originally from Bennet Matschullat.
  * Code cleaned up to CodeIgniter standards by Erik Torsner
@@ -70,7 +71,8 @@ class Twig {
 		Twig_Autoloader::register();
 		
 		// init paths
-		$this->template_dir = APP_PATH . "templates";
+		//$this->template_dir = APP_PATH . "templates";
+		$this->template_dir = ROOT ;
 		$this->cache_dir = ENGINE_PATH . "cache" . DS . "templates";
 		// load environment
 		$this->loader = new Twig_Loader_Filesystem($this->template_dir, $this->cache_dir);

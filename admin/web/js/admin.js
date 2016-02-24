@@ -2,6 +2,7 @@ var Admin = {
 	global : {},
 	
 	init : function(){
+		this.init_rich_textarea();
 		this.init_lang_switcher();
 		this.init_checkbox();
 		this.init_select();
@@ -17,6 +18,14 @@ var Admin = {
 		});
 	},
 	
+	init_rich_textarea : function()
+	{
+		tinymce.init({ 
+			selector:'.rich_textarea' ,
+			menubar: false,
+		});
+	},
+	
 	init_lang_switcher : function(){
 		$(document).on("change" , "#lang_switcher", function(){
 			var v = $(this).val();
@@ -28,8 +37,8 @@ var Admin = {
 	
 	init_checkbox : function(){
 		$("input[type=checkbox],input[type=radio]").iCheck({
-			checkboxClass: 'icheckbox_flat-green',
-			radioClass: 'iradio_flat-green'
+			checkboxClass: 'icheckbox_square-green',
+			radioClass: 'iradio_square-green'
 		});
 	},
 	

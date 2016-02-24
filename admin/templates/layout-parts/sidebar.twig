@@ -38,14 +38,32 @@
 							<span class="fa fa-caret-{{ tab == 'templates' ? 'up' : 'down' }} arr"></span>
 						</a>
 						<ul class="sub-menu">
+							<!--
 							<li class="{% if page == 'manager'%}active{% endif %}">
 								<a href="{{ this.route.generate('template_manager') }}">Templates manager</a>
 							</li>
+							-->
 							<li class="{% if page == 'channels'%}active{% endif %}">
 								<a href="{{ this.route.generate('manage_channels') }}">Channels</a>
 							</li>
 							<li class="{% if page == 'custom_fields'%}active{% endif %}">
 								<a href="{{ this.route.generate('fields_groups') }}">Custom fields</a>
+							</li>
+						</ul>
+					</li>
+					
+					<li class=" {% if tab == 'users'%}active{% endif %}">
+						<a href="javascript:;">
+							<i class="fa fa-users"></i>
+							<span class="title">Users</span>
+							<span class="fa fa-caret-{{ tab == 'users' ? 'up' : 'down' }} arr"></span>
+						</a>
+						<ul class="sub-menu">
+							<li class="{% if page == 'users'%}active{% endif %}">
+								<a href="{{ this.route.generate('users') }}">All users</a>
+							</li>
+							<li class="{% if page == 'user_roles'%}active{% endif %}">
+								<a href="{{ this.route.generate('user_roles') }}">User roles</a>
 							</li>
 						</ul>
 					</li>
@@ -57,32 +75,49 @@
 							<span class="fa fa-caret-{{ tab == 'settings' ? 'up' : 'down' }} arr"></span>
 						</a>
 						<ul class="sub-menu">
-							<li class="{% if page == 'logs'%}active{% endif %}">
-								<a href="/logs">General configuration</a>
+							<li class="{% if page == 'settings'%}active{% endif %}">
+								<a href="{{ this.route.generate('settings') }}">General configuration</a>
 							</li>
-							<li class="{% if page == 'calltimes'%}active{% endif %}">
-								<a href="/calltimes">Security</a>
+							<li class="{% if page == 'security'%}active{% endif %}">
+								<a href="{{ this.route.generate('security') }}">Security</a>
 							</li>
 						</ul>
+					</li>
+					<li class=" {% if page == 'components'%}active{% endif %}">
+						<a href="{{ this.route.generate('components') }}">
+							<i class="fa fa-cubes"></i>
+							<span class="title">Components</span>
+						</a>
 					</li>
 				</ul>
 				
-				<div class="cap">Components</div>
+				{% for block_id, menu_block in admin_menu %}
+				<div class="cap">{{ menu_block.title }}</div>
 				<ul class="nav_menu">
-					<li class=" {% if tab == 'users'%}active{% endif %}">
-						<a href="javascript:;">
-							<i class="fa fa-users"></i>
-							<span class="title">Users</span>
+					{% for menu_id, menu_item in menu_block.items %}
+					<li class=" {% if tab == menu_id %}active{% endif %}">
+						<a href="{% if menu_item.items|length%}javascript:;{% else %}{{ menu_item.link }}{% endif %}">
+							<i class="{{ menu_item.icon }}"></i>
+							<span class="title">{{ menu_item.title }}</span>
+							{% if menu_item.items|length%}
 							<span class="fa fa-caret-{{ tab == 'users' ? 'up' : 'down' }} arr"></span>
+							{% endif %}
 						</a>
+						{% if menu_item.items|length%}
 						<ul class="sub-menu">
-							<li class="{% if page == 'logs'%}active{% endif %}">
-								<a href="/logs">All users</a>
+							{% for sub_menu_id,sub_item in menu_item.items %}
+							<li class="{% if page == sub_menu_id %}active{% endif %}">
+								<a href="{{ sub_item.link }}">{{ sub_item.title }}</a>
 							</li>
+							{% endfor %}
 						</ul>
+						{% endif %}
 					</li>
-
+					{% endfor %}
 				</ul>
+				{% endfor %}
+				
+				
 					
 			</div>
 		</div>

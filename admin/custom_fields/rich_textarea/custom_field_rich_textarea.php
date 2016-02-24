@@ -16,7 +16,7 @@ class custom_field_rich_textarea extends Custom_field{
 	
 	public function get_html()
 	{
-		echo  $this->getTemplate("rich_textarea.twig", $this->data);
+		echo  $this->getTemplate("/admin/custom_fields/rich_textarea/rich_textarea.twig", $this->data);
 	}
 
 }

@@ -36,6 +36,8 @@ class pikolor_route extends pikolor_core{
 	{
 		$flague = false;
 		$requestUrl = $_SERVER['REQUEST_URI'];
+		$tmp = explode("?" , $requestUrl);
+		$requestUrl = $tmp[0];
 		$vars = array();
 		$action = "";
 		
@@ -125,11 +127,16 @@ class pikolor_route extends pikolor_core{
 	
 	public function generate($path , $params = array())
 	{
-		$url = $this->routes[$path]['url'];
-		foreach($params as $param => $val)
+		if (isset($this->routes[$path]['url']))
 		{
-			$url = str_replace(":" . $param , $val , $url);
+			$url = $this->routes[$path]['url'];
+			foreach($params as $param => $val)
+			{
+				$url = str_replace(":" . $param , $val , $url);
+			}
 		}
+		else
+			$url = $path;
 		return $url;
 	}
 	

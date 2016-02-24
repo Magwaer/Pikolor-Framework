@@ -166,6 +166,37 @@ body{
 	float:left;
 	width:280px;
 }
+.line{
+	height:1px;
+	margin:15px 0;
+	border-bottom:1px solid rgba(0,0,0,0.1);
+}
+
+.breadcrumb{
+	background:rgba(0,0,0,0.03);
+	border-radius:2px;
+	color:#666;
+}
+.breadcrumb a{
+	color:#666;
+}
+.breadcrumb a:hover{
+	text-decoration:none;
+	color:#333;
+}
+.empty{
+	text-align:center;
+	font-size:16px;
+	color:#555;
+	padding:100px 0;
+}
+.empty span{
+	font-size:32px;
+	display:inline-block;
+	padding:0 0 10px;
+	transform: rotate(90deg);
+}
+
 @media (max-width: 600px){
 	#sidebar{
 		width:36px;
@@ -233,6 +264,16 @@ body{
 .btn-default:hover,.btn-default:focus{
 	
 }
+.btn-red{
+    background: #f44336 none repeat scroll 0 0;
+    border-color: rgba(0,0,0,0.05);
+    border-radius: 3px;
+    color: #FFF;
+}
+.btn-red:focus,.btn-red:hover,.btn-red:active{
+	background:#df3e32 ;
+	color:#fff;
+}
 .table{
 	font-size:13px;
 }
@@ -245,6 +286,9 @@ body{
 	border-top:1px solid rgba(120, 130, 140, 0.1);
 	padding:10px 16px;
 }
+.table .no_pad{
+	padding:10px 6px !important;
+}
 
 .form-actions{
 	padding:0 0 15px;
@@ -254,6 +298,7 @@ body{
 }
 .form-group.short-group{
 	padding:0 15px;
+	margin-bottom:5px;
 }
 .form-group.short-group .control-label{
 	margin-bottom:5px;
@@ -267,6 +312,9 @@ body{
 .form-horizontal .form-group,.row{
 	margin-left:0;
 	margin-right:0;	
+}
+label{
+	font-weight:500;
 }
 #content .dropdown-menu.inner{
 	padding:0;

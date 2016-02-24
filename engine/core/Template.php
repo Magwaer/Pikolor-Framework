@@ -16,8 +16,16 @@ class pikolor_template extends APP_Controller{
 	public $config = array();
 	public $route ;
 	public $request;
+	public $twig;
+	public $css_styles = array();
+	public $js_scripts = array();
 	
 	private $id_admin = false;
+	
+	public function init()
+	{
+		
+	}
 	
 	function __construct()
 	{
@@ -41,6 +49,7 @@ class pikolor_template extends APP_Controller{
 			$this->set_var("css_path" , "/app/web/css/");
 			$this->set_var("js_path" , "/app/web/js/");
 		}
+		
 	}
 	
 	/**
@@ -68,6 +77,9 @@ class pikolor_template extends APP_Controller{
 	*/
 	function renderTemplate($template, $return = false)
 	{
+		$this->set_var("css_styles" , $this->css_styles);
+		$this->set_var("js_scripts" , $this->js_scripts);
+		
 		$page = $this->twig->render($template , $this->vars );
 		if (!$return)
 			echo $page;
@@ -85,6 +97,22 @@ class pikolor_template extends APP_Controller{
 			$vars = $this->vars ;
 		$page = $this->twig->render($template , $vars );
 		return $page;
+	}
+	
+	function add_to_css($path, $name)
+	{
+		if ($name)
+			$this->css_styles[$name] = $path;
+		else
+			array_push($this->css_styles, $path);
+	}
+	
+	function add_to_js($path, $name)
+	{
+		if ($name)
+			$this->js_scripts[$name] = $path;
+		else
+			array_push($this->js_scripts, $path);
 	}
 	
 	function __destruct()

@@ -1,0 +1,64 @@
+{% extends "admin/templates/layout.twig" %}
+
+{% block stylesheets %}
+	{{ parent() }}
+	
+{% endblock %}
+
+{% block content %}
+	
+	
+	<div class="inner">
+		<div class="big_box">
+			<h3 class="box-title">
+				{{ page_title }}
+			</h3>
+			
+			<!-- END PAGE HEADER-->
+			<table class="table ">
+				<thead class="flip-content">
+					<tr>
+						<th> Title</th>
+						<th class="numeric" width="100px"> Status </th>
+						<th class="numeric" width="100px"> Role </th>
+						<th class="numeric" width="100px"> Options </th>
+					</tr>
+				</thead>
+				<tbody>
+				{% for user in users %}
+					<tr style="vertical-align:bottom">
+						<td style="vertical-align:middle"> 
+							<a href="{{ this.route.generate('user_edit', {'id' : user.id }) }}">{{ user.name }}</a>
+						</td>
+						<td class="numeric" style="vertical-align:middle">
+							{% if user.status == 1 %}
+							<span class="label label-sm label-success">Active</span>
+							{% else %}
+							<span class="label label-sm label-warning">Pending</span>
+							{% endif %}
+						</td>
+						<td class="numeric" style="vertical-align:middle">
+							<span class="label label-sm label-info">{{ user.role }}</span>
+						</td>
+						<td class="numeric" style="vertical-align:middle">
+							<div class="btn-group pull-right">
+								<button type="button" class="btn btn-sm btn-blue dropdown-toggle" data-toggle="dropdown" data-delay="1000" data-close-others="true">
+									{{ 'Actions' }} <i class="fa fa-angle-down"></i>
+								</button>
+								<ul class="dropdown-menu pull-right" role="menu">
+									<li><a href="{{ this.route.generate('node_edit', {'id' : node.id }) }}"  >{{ 'Edit' }}</a></li>
+									<li><a href="{{ this.route.generate('node_delete', {'id' : node.id }) }}" onclick="return Admin.delete_node($(this))" >{{ 'Remove' }}</a></li>
+								</ul>
+							</div>
+						</td>
+					</tr>
+				{% endfor %}
+				</tbody>
+			</table>
+		</div>
+	</div>
+{% endblock %}
+
+{% block javascript_bottom %}
+	
+{% endblock %}

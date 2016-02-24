@@ -74,4 +74,25 @@ class nodes_model extends Model{
 		//$this->db->where("node_id", $node_id)->delete("p_node_fields");
 	}
 	
+	public function search_by_link($uri)
+	{
+		if ($this->is_multilang)
+		{
+			$langs = array_keys($this->config['general']['langs']);
+		}
+		$this->db->join("p_node_fields f", "f.node_id=n.id and f.label = 'title' " . ($this->is_multilang ? " and f.lang = '" . $langs[0] ."'": "") , "LEFT");
+		$node = $this->db->where("uri", $uri)->getOne("p_nodes n", "n.* , f.value as title");
+		return $node;
+	}
+	
+	public function get_home_page()
+	{
+		if ($this->is_multilang)
+		{
+			$langs = array_keys($this->config['general']['langs']);
+		}
+		$this->db->join("p_node_fields f", "f.node_id=n.id and f.label = 'title' " . ($this->is_multilang ? " and f.lang = '" . $langs[0] ."'": "") , "LEFT");
+		$node = $this->db->where("home_page", 1)->getOne("p_nodes n", "n.* , f.value as title");
+		return $node;
+	}
 }

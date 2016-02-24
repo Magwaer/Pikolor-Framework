@@ -15,7 +15,6 @@ require_once("Template.php");
 class APP_Controller extends pikolor_core{
 	private $is_init = false;
 	private $error = "";
-	public $db ;
 	public $config;
 	public $is_debugger = false;
 	public $template;
@@ -24,6 +23,11 @@ class APP_Controller extends pikolor_core{
 	public $logs = array();
 	public $user = array();
 	public $access ;
+	public $components ;
+	
+	public $lang_keys = array();
+	public $langs = array();
+	public $is_multilang = false;
 	
 	/**
 	* @init application controller
@@ -36,30 +40,47 @@ class APP_Controller extends pikolor_core{
 			
 			$this->request = new pikolor_request();
 			
-			$this->init_db();
-			
 			$this->load("lib" , "Access" , false);
 			$this->access = new Access($this->db, $this->config);
-			
-			$this->template = new pikolor_template();
-			$this->template->config = $this->config;
 			
 			$this->route = new pikolor_route();
 			$this->route->parse();
 			
 			$this->template->route = $this->route;
 			
+			if (is_array($this->config['general']['langs']))
+			{
+				$this->is_multilang = true;
+				$this->lang_keys = array_keys($this->config['general']['langs']);
+				$this->langs = $this->config['general']['langs'];
+				$this->to_template("langs", $this->langs);
+			}
+			else
+				$this->is_multilang = false;
+				
+			$this->to_template("is_multilang", $this->is_multilang );
+			
 			$this->add_to_twig("this" , $this);
+			
+			if (!isset($this->template->vars['breadcrumb']) || !is_array($this->template->vars['breadcrumb']))
+				$this->template->vars['breadcrumb'] = array();
 		}
 	}
 	
 	/**
 	* @init database connection
 	*/
-	public function init_db()
+	public function init_db($db)
 	{
-		$this->load("lib", "MysqliDb", false);
-		$this->db = new MysqliDb ($this->config['db']['host'],  $this->config['db']['user'], $this->config['db']['password'], $this->config['db']['name']);
+		$this->db = $db;
+	}
+	
+	/**
+	* @init template
+	*/
+	public function init_template(&$template)
+	{
+		$this->template = &$template;
 	}
 	
 	/**
@@ -72,6 +93,15 @@ class APP_Controller extends pikolor_core{
 	}
 	
 	/**
+	* @set components object
+	* @param array $config
+	*/
+	function set_components(&$components)
+	{
+		$this->components = &$components;
+	}
+	
+	/**
 	* @set a variable to template
 	* @param string $key
 	* @param mixed $val
@@ -80,6 +110,16 @@ class APP_Controller extends pikolor_core{
 	{
 		$this->template->set_var($key , $val);
 	}
+	
+	/**
+	* @set a variable to template
+	* @param string $key
+	* @param mixed $val
+	*/
+	public function to_breadcrumb($title , $link)
+	{
+		array_push($this->template->vars['breadcrumb'] , array("title" => $title, "link" => $link));
+	}
 
 	/**
 	* @render a specific template
@@ -87,7 +127,19 @@ class APP_Controller extends pikolor_core{
 	*/
 	public function renderTemplate($template)
 	{
+		global $admin_menu;
+		$this->to_template("admin_menu" , $admin_menu);
 		$this->template->renderTemplate($template);
+	}
+	
+	public function add_css($path, $name = "")
+	{
+		$this->template->add_to_css($path, $name);
+	}
+	
+	public function add_js($path, $name = "")
+	{
+		$this->template->add_to_js($path, $name);
 	}
 	
 	/**

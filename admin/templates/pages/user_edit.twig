@@ -1,0 +1,97 @@
+{% extends "admin/templates/layout.twig" %}
+
+{% block content %}
+	
+	<div class="inner">
+		<form class="form-horizontal form-bordered form-row-stripped ajax_form" action="{{ this.route.generate('user_edit' , {'id' : user.id }) }}" method="post">
+			<div class="left_big">
+				<div class="big_box">
+					<div class="btn-group pull-right">
+						<button type="button" class="btn btn-fit-height btn-grey dropdown-toggle" dropdown-toggle" data-toggle="dropdown" data-delay="1000" data-close-others="true">
+							{{ 'Actions' }} <i class="fa fa-angle-down"></i>
+						</button>
+						<ul class="dropdown-menu pull-right" role="menu">
+							<li><a href="{{ this.route.generate('user_delete', {'id' : user.id }) }}" onclick="return Admin.delete_node($(this))" >Delete user</a></li>
+						</ul>
+					</div>
+			
+					<h3 class="box-title">
+						Content
+					</h3>
+		
+					<div class="form-body">
+						<div class="form-group">
+							<label class="control-label col-md-3">Name</label>
+							<div class="col-md-9">
+								<input type="text" placeholder="" name="data[name]" class="form-control" value="{{ user.name }}" >
+							</div>
+						</div>
+						
+						<div class="form-group">
+							<label class="control-label col-md-3">Email</label>
+							<div class="col-md-9">
+								<input type="text" placeholder="" name="data[email]" class="form-control" value="{{ user.email }}" >
+							</div>
+						</div>
+						
+						
+					</div>
+					<div class="form-actions">
+						<div class="row">
+							<div class="col-md-offset-3 col-md-9">
+								<button class="btn btn-blue" type="submit"><i class="fa fa-check"></i> Save</button>
+								<button class="btn btn-default" type="button">Cancel</button>
+							</div>
+						</div>
+					</div>
+					
+				</div>
+			</div>
+			
+			<div class="small_right">
+				<div class="big_box">
+					<h3 class="box-title">
+						Options
+					</h3>
+					
+					<div class="portlet-body form">
+						<div class="form-body">
+							
+							<div class="form-group short-group">
+								<label class="control-label" >
+									<input type="checkbox" name="data[status]" value="1" {{ user.status == '1' ? 'checked' : '' }} >
+									Active
+								</label>
+							</div>
+							
+							<div class="form-group short-group">
+								<label class="control-label ">Role</label>
+								<select class="bs-select" data-width="100%" name="data[role]" >
+									{% for role in roles %}
+									<option value="{{ role.id }}" {{ role.role == user.role ? "selected" : "" }}>{{ role.role }}</option>
+									{% endfor %}
+								</select>
+							</div>
+							
+						</div>
+						<div class="form-actions">
+							<div class="row">
+								<div class="col-md-offset-3 col-md-9">
+									<button class="btn btn-blue" type="submit"><i class="fa fa-check"></i> Save</button>
+									<button class="btn btn-default" type="button">Cancel</button>
+								</div>
+							</div>
+						</div>
+							
+					</div>
+						
+					
+				</div>
+				<div class="space-20"></div>
+			</div>
+			<input type="hidden" name="ac" value="save" />
+		</form>
+	</div>
+{% endblock %}
+
+

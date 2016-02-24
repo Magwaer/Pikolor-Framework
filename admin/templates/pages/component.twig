@@ -1,0 +1,20 @@
+{% extends "admin/templates/layout.twig" %}
+
+{% block stylesheets %}
+	{{ parent() }}
+	
+{% endblock %}
+
+{% block content %}
+	
+	
+	<div class="inner">
+		{% include 'admin/templates/layout-parts/breadcrumb.twig' %}  
+		
+		{{ component_content |raw }}
+	</div>
+{% endblock %}
+
+{% block javascript_bottom %}
+	
+{% endblock %}

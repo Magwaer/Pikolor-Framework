@@ -1,0 +1,8 @@
+{% if breadcrumb|length %}
+<div class="breadcrumb">
+	{% for item in breadcrumb %}
+		{% if loop.index > 1 %} / {% endif %}
+		<a href="{{ item.link }}">{{ item.title }}</a>
+	{% endfor %}
+</div>
+{% endif%}

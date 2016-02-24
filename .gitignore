@@ -1,2 +1,14 @@
 /app/config/db.yml
-/engine/cache
+/app/config/general.yml
+/app/config/route.yml
+/app/controllers
+/app/models
+/app/templates
+/app/web/css
+/app/web/img
+/app/web/js
+/engine/cache/errors
+/engine/cache/templates
+/components
+/upload
+/test.php

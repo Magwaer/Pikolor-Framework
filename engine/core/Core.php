@@ -10,21 +10,22 @@
 * @index
 */
 
-if (!defined('CORE_PATH'))
-	define('CORE_PATH', ENGINE_PATH . 'core' . DS );
 
-if (!defined('LIB_PATH'))
-	define('LIB_PATH', ENGINE_PATH . 'lib' . DS );
-
+require_once("Observer.php");
 require_once("Request.php");
 require_once("Route.php");
 require_once("APP_Controller.php");
 require_once("Model.php");
+require_once("Main_trigger.php");
+require_once("Component.php");
 
 class pikolor_core {
 	protected $config = array();
 	public $request;
 	public $route;
+	public $db ;
+	public $components;
+	public $observer;
 	
 	/*
 	* @the vars array
@@ -64,6 +65,25 @@ class pikolor_core {
 	*/
 	public function load($type , $file , $init = false)
 	{
+		if (class_exists($file))
+		{
+			if ($init)
+			{
+				$s_file = strtolower($file);
+				
+				if ($type == "models")
+				{
+					$instance = new $file($this->db, $this->config);
+					$instance->init_template($this->template); 
+					//$instance->set_components($this->set_components);
+					$this->$s_file = $instance;
+				}
+				else
+					$this->$s_file = new $file();
+			}
+			return true;
+		}
+		
 		if (file_exists(ENGINE_PATH . $type . DS . $file . ".php"))
 		{
 			$adr = ENGINE_PATH . $type . DS . $file . ".php";
@@ -73,7 +93,7 @@ class pikolor_core {
 			$adr = APP_PATH . $type . DS . $file . ".php";
 		}	
 		
-		if ($adr)
+		if (isset($adr))
 		{
 			require_once($adr);
 			if ($init)
@@ -81,7 +101,12 @@ class pikolor_core {
 				$s_file = strtolower($file);
 			
 				if ($type == "models")
-					$this->$s_file = new $file($this->db, $this->config);
+				{
+					$instance = new $file($this->db, $this->config);
+					$instance->init_template($this->template); 
+					//$instance->set_components($this->set_components);
+					$this->$s_file = $instance;
+				}
 				else
 					$this->$s_file = new $file();
 			}
@@ -97,10 +122,20 @@ class pikolor_core {
 	public function init_core(){
 		removeMagicQuotes();
 		
+		if (!defined('CORE_PATH'))
+			define('CORE_PATH', ENGINE_PATH . 'core' . DS );
+
+		if (!defined('LIB_PATH'))
+			define('LIB_PATH', ENGINE_PATH . 'lib' . DS );
+
+		$this->observer = new Observer();
+		
 		$this->load("lib", "Spyc", true);
 		
 		$this->init_config("db");
 		$this->init_config("general");
+		$this->init_db();
+		$this->init_template();
 		$this->set_errors();
 		$this->request = new pikolor_request();
 		
@@ -115,7 +150,81 @@ class pikolor_core {
 		$this->route = new pikolor_route();
 		$this->route->parse();
 		
+		global $admin_menu;
+		$admin_menu = array();
+		
+		$this->init_components();
 		$this->init_app();
+	}
+	
+	/**
+	* @Init in manual mode CORE. This is magic :)
+	*/
+	public function manual_init(){
+		error_reporting(E_ALL);
+		ini_set('error_reporting', E_ALL);
+
+		session_start();
+		$_SESSION['time_start_script'] = microtime(true);
+
+		removeMagicQuotes();
+		
+		if (!defined('DS'))
+			define('DS', DIRECTORY_SEPARATOR);
+
+		if (!defined('ROOT'))
+		{
+			$root = dirname(__FILE__);
+			$root = str_replace("engine" . DS . "core" , "" , $root);
+			define('ROOT', $root);
+		}		
+		
+		if (!defined('ADR'))
+		{
+			$adr=str_replace("/index.php" , "" ,$_SERVER['PHP_SELF']);
+			define('ADR', $adr);
+		}
+
+		if (!defined('ENGINE_PATH'))
+			define('ENGINE_PATH', ROOT . DS . 'engine' . DS );
+
+		if (!defined('ADMIN_PATH'))
+			define('ADMIN_PATH', ROOT . DS . 'admin' . DS );
+		
+		if (!defined('CORE_PATH'))
+			define('CORE_PATH', ENGINE_PATH . 'core' . DS );
+
+		if (!defined('LIB_PATH'))
+			define('LIB_PATH', ENGINE_PATH . 'lib' . DS );
+
+		$this->observer = new Observer();
+		
+		$this->load("lib", "Spyc", true);
+		
+		$this->init_config("db");
+		$this->init_config("general");
+		self::init_db();
+		self::init_template();
+		$this->set_errors();
+		$this->request = new pikolor_request();
+		
+		$loc_1 = $this->request->location(1);
+		if ($loc_1 == "admin")
+			define('APP_PATH', ROOT . DS . 'admin' . DS );
+		else
+			define('APP_PATH', ROOT . DS . 'app' . DS );
+		
+		$this->set_lang();
+		
+		$this->route = new pikolor_route();
+		$this->route->parse();
+		
+		global $admin_menu;
+		$admin_menu = array();
+		
+		$this->init_components();
+		
+		$this->init();
 	}
 	
 	/**
@@ -136,26 +245,67 @@ class pikolor_core {
 				if (method_exists($app_class , $app_method))
 				{
 					$instance = new $app_class;
+					$instance->setObserver($this->observer);
 					$instance->set_config($this->config);
+					$instance->init_db($this->db); 
+					$instance->init_template($this->template); 
+					$instance->set_components($this->components);
 					$instance->init(); 
 					call_user_func_array(array($instance, $app_method), $this->route->vars);
 				}
 				else
 				{
-					$obj = new $app_class();
-					$obj->set_config($this->config);
-					$obj->init(); 
+					$instance = new $app_class();
+					$instance->setObserver($this->observer);
+					$instance->set_config($this->config);
+					$instance->init_db($this->db); 
+					$instance->init_template($this->template); 
+					$instance->set_components($this->set_components);
+					$instance->init(); 
 				}
 			}
 		}
 		else { // Searching in DB so content
-			$app = new APP_Controller();
-			$app->set_config($this->config);
-			$app->init(); 
+			$tmp_trigger = explode(":",$this->config['general']['main_trigger']);
+			$class_name = $tmp_trigger[0];
+			$path = realpath(ROOT . DS . $tmp_trigger[1]);
+			require_once($path);
 			
-			$url = $this->route->get_this_url();
-			$node = $app->db->where("link", $url)->getOne("p_nodes");
-			$app->renderTemplate($node['template']);
+			$instance = new $class_name;
+			$instance->setObserver($this->observer);
+			$instance->set_config($this->config);
+			$instance->init_db($this->db);
+			$instance->init_template($this->template); 
+			$instance->set_components($this->components);
+			$instance->init(); 
+		}
+	}
+	
+	public function init()
+	{
+		
+	}
+	
+	/**
+	* @load config file
+	* @param string $file
+	*/
+	function init_components() {
+		$components = $this->db->get("p_components");
+		foreach($components as &$component)
+		{
+			$path = realpath(ROOT . DS . "components" . DS . $component['label'] . DS . $component['label'] . ".php");
+			require_once($path);
+			
+			$instance = new $component['label'];
+			$instance->label = $component['label'];
+			$instance->setObserver($this->observer);
+			$instance->set_config($this->config);
+			$instance->init_db($this->db);
+			$instance->init_template($this->template); 
+			$instance->set_components($this->components);
+			$instance->init(); 
+			$this->components->$component['label'] = $instance;
 		}
 	}
 	
@@ -165,6 +315,27 @@ class pikolor_core {
 	*/
 	function init_config($file) {
 		$this->config[$file] = $this->spyc->YAMLLoad( ROOT . DS . "app" . DS . "config" . DS . $file . ".yml");
+	}
+	
+	
+	/**
+	* @init template
+	*/
+	public function init_template()
+	{
+		$this->template = new pikolor_template();
+		$this->template->config = $this->config;
+	}
+
+	
+	/**
+	* @load config file
+	* @param string $file
+	*/
+	function init_db() {
+		$this->load("lib", "MysqliDb", false);
+		$this->db = new MysqliDb ($this->config['db']['host'],  $this->config['db']['user'], $this->config['db']['password'], $this->config['db']['name']);
+		//$this->db->rawQuery('set names utf8');
 	}
 	
 	/**
@@ -181,16 +352,22 @@ class pikolor_core {
 		{
 			error_reporting(E_ALL & ~E_NOTICE);
 			
-			$error_path = ENGINE_PATH . "cache" . DS . "error.log";
+			$error_path = ENGINE_PATH . "cache" . DS . "errors" . DS . "error.log";
 			ini_set('display_errors','Off');
 			ini_set('log_errors', 'On');
 			ini_set('error_log', $error_path);
 		}
 	}
 	
+	function __construct()
+	{
+		
+	}
+	
 	function __destruct()
 	{  
-		
+		global $admin_menu;
+		$admin_menu = array();
 	}
 
 	/**
@@ -234,6 +411,29 @@ class pikolor_core {
 		$this->template->twig->register_global($name, $obj);
 	}
 	
+	function setObserver(&$observer)
+	{
+		$this->observer = $observer;
+	}
+	
+	function notify($mt, &$arg_0 = null, &$arg_1 = null, &$arg_2 = null, &$arg_3 = null, &$arg_4 = null, &$arg_5 = null, &$arg_6 = null, &$arg_7 = null, &$arg_8 = null, &$arg_9 = null)
+	{
+		$args = func_get_args();
+		unset($args[0]);
+		$this->observer->notify($mt, $args);
+		if(is_array($args))
+		{
+			foreach($args as $k=>$arg)
+			{
+				$var_name = "arg_" . $k;
+				$$var_name = $arg;
+			}
+		}
+		else
+		{
+			$arg_0 = $args;
+		}
+	}
 }
 
 

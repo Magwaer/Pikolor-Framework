@@ -165,7 +165,22 @@ class Nodes extends Admin{
 		
 		foreach($this->fields as $field)
 		{
-			$field->save_data((isset($data[$field->data['label']]) ? $data[$field->data['label']] : ""), $id);
+			$field_value = $field->prepare_data((isset($data[$field->data['label']]) ? $data[$field->data['label']] : ""), $id);
+			
+			$field_data = $field->get_data();
+			if ($field_data['multilang'])
+			{
+				foreach($field_value as $lang => $value)
+				{
+					$arr = array("node_id" => $id, "field_id" => $field_data['id'], "label" => $field_data['label'] , "lang" => $lang, "value" => $value);
+					$this->db->replace("p_node_fields" , $arr);
+				}
+			}
+			else
+			{
+				$arr = array("node_id" => $id, "field_id" => $field_data['id'], "label" => $field_data['label'] , "lang" => "", "value" => $field_value);
+				$this->db->replace("p_node_fields" , $arr);
+			}
 		}
 		
 		if (!is_array($data['title']))

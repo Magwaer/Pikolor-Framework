@@ -17,19 +17,24 @@ class custom_field_checkbox extends Custom_field{
 	public function get_html()
 	{
 		$this->data['options'] = explode("\r\n" , $this->data['options']['options']);
-		$this->data['value'] = json_decode($this->data['value'], true);
+		$this->data['value'] = json_decode(isset($this->data['value']) ? $this->data['value'] : "", true);
 		
-		echo  $this->getTemplate("checkbox.twig", $this->data);
+		echo  $this->getTemplate("/admin/custom_fields/checkbox/checkbox.twig", $this->data);
 	}
 	
-	
-	public function save_data($data, $node_id)
+	public function get_field_value()
 	{
-		$field_data = $this->get_data();
+		$value = $this->get_data('value');
+		$value = json_decode($value, true);
+		if (!is_array($value))
+			$value = array();
 		
-		$arr = array("node_id" => $node_id, "field_id" => $field_data['id'], "label" => $field_data['label'] , "lang" => "", "value" => json_encode($data));
-		$this->db->replace("p_node_fields" , $arr);
+		return $value;
+	}
 	
+	public function prepare_data($data, $node_id)
+	{
+		return json_encode($data);
 	}
 }
 

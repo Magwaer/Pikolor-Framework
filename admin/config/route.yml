@@ -111,3 +111,53 @@ custom_field_delete:
     action: Custom_fields:detele_custom_field
 
 
+
+# Settings
+
+settings:
+    url: /admin/settings
+    action: Settings:show_settings
+
+security:
+    url: /admin/settings/security
+    action: Settings:security
+
+
+
+# users
+
+users:
+    url: /admin/users
+    action: Users:show_users
+
+user_roles:
+    url: /admin/user_roles
+    action: Users:user_roles
+
+user_edit:
+    url: /admin/user_edit/:id
+    action: Users:user_edit
+
+role_edit:
+    url: /admin/user_roles/role_edit/:id
+    action: Users:role_edit
+
+role_add:
+    url: /admin/user_roles/role_add
+    action: Users:role_add
+
+role_delete:
+    url: /admin/user_roles/role_delete/:id
+    action: Users:role_delete
+
+
+
+# Components
+
+components:
+    url: /admin/components
+    action: Components:show_components
+
+component_action:
+    url: /admin/component/:component/:class/:action
+    action: Components:component_action

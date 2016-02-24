@@ -17,13 +17,17 @@
 		<link href="{{ libs_path }}fontawesome/css/font-awesome.min.css" rel="stylesheet" type="text/css"/>
 		<link href="{{ css_path }}admin.css" rel="stylesheet" type="text/css"/>
 		
+		{% for css_style in css_styles %}
+		<link href="{{ css_style }}" rel="stylesheet" type="text/css"/>
+		{% endfor %}
+		
 	</head>
 	<body >
 
 
-			{% include 'layout-parts/sidebar.twig' %}
+			{% include 'admin/templates/layout-parts/sidebar.twig' %}
 			<div id="container">
-				{% include 'layout-parts/header.twig' %}
+				{% include 'admin/templates/layout-parts/header.twig' %}
 				
 				<div id="content">
 					{% block content %}{% endblock %}
@@ -82,8 +86,16 @@
 		<script src="{{ libs_path }}bootstrap-select/js/bootstrap-select.min.js" type="text/javascript"></script>
 		<script src="{{ libs_path }}icheck/icheck.min.js" type="text/javascript"></script>
 		<script src="{{ libs_path }}toastr/toastr.min.js" type="text/javascript"></script>
+		<script src="{{ libs_path }}tinymce/tinymce.min.js" type="text/javascript"></script>
+		
+		{% for js_script in js_scripts %}
+		<script src="{{ js_script }}" type="text/javascript"></script>
+		{% endfor %}
+		
 		<script src="{{ js_path }}admin.js" type="text/javascript"></script>
+		
 		{% block javascript_bottom %}
+		
 		{% endblock %}
 
 	</body>

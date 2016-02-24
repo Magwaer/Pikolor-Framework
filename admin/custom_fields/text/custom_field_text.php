@@ -16,7 +16,7 @@ class custom_field_text extends Custom_field{
 	
 	public function get_html()
 	{
-		echo  $this->getTemplate("text.twig", $this->data);
+		echo  $this->getTemplate("/admin/custom_fields/text/text.twig", $this->data);
 	}
 
 }

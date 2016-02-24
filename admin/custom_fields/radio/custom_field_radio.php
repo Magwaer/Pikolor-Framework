@@ -18,17 +18,9 @@ class custom_field_radio extends Custom_field{
 	{
 		$this->data['options'] = explode("\r\n" , $this->data['options']['options']);
 		
-		echo  $this->getTemplate("radio.twig", $this->data);
+		echo  $this->getTemplate("/admin/custom_fields/radio/radio.twig", $this->data);
 	}
-	
-	public function save_data($data, $node_id)
-	{
-		$field_data = $this->get_data();
-		
-		$arr = array("node_id" => $node_id, "field_id" => $field_data['id'], "label" => $field_data['label'] , "lang" => "", "value" => $data);
-		$this->db->replace("p_node_fields" , $arr);
-	
-	}
+
 }
 
 

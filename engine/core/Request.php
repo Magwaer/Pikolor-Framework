@@ -12,10 +12,12 @@
 
 class pikolor_request {
 	private $locations = array();
+	public $uri;
 	
 	function __construct()
 	{
 		$this->getLocations();
+		$this->uri = $_SERVER['REQUEST_URI'];
 	}
 	
 	function get($var)

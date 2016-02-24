@@ -1,0 +1,22 @@
+<h4 class="photo_block_title">Photos</h4>
+
+<div class="form-group">
+	<div class="photo_block">
+		{% for photo in value %}
+		<div class="new_request_image_block">
+			<img class="new_request_image_block_image" src="{{ photo.path }}"/>
+			<input type="hidden" value="{{ photo.id }}" name="data[{{ label }}][]">
+			<a onclick="delete_file({{ photo.id }} , $(this)  , '{{ label }}'); return false" class="new_request_image_delete" href="#">delete</a>
+		</div>
+		{% endfor %}
+		
+		<div class="new_request_image_block " style="position: relative; overflow: hidden; direction: ltr;">
+			<a href="#" class="css3btn new_request_image_add">add photo</a>
+			<input type="file" style="cursor: pointer;" id="{{ label }}" name="file" onchange="upload_file('{{ options.path }}' , '{{ label }}');"/>
+		</div>
+	</div>
+
+	{% if info %}
+	<span class="help-block">{{ info }}</span>
+	{% endif %}
+</div>

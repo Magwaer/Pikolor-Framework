@@ -29,6 +29,8 @@ class fields_model extends Model{
 				$instance = new $class;
 				$instance->path = dirname($type['path']);
 				$instance->set_config($this->config);
+				$instance->init_db($this->db);
+				$instance->init_template($this->template); 
 				$instance->init();
 				$instance	->set_data($type);
 				$type['obj'] = $instance;
@@ -60,6 +62,8 @@ class fields_model extends Model{
 				$instance = new $class;
 				$instance->path = dirname($field['path']);
 				$instance->set_config($this->config);
+				$instance->init_db($this->db);
+				$instance->init_template($this->template); 
 				$instance->init();
 				$instance	->set_data($field);
 				$field = $instance;
@@ -118,6 +122,8 @@ class fields_model extends Model{
 				$instance = new $class;
 				$instance->path = dirname($field['path']);
 				$instance->set_config($this->config);
+				$instance->init_db($this->db);
+				$instance->init_template($this->template); 
 				$instance->init();
 				$instance	->set_data($field);
 				$field = $instance;

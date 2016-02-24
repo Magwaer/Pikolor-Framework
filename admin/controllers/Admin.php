@@ -42,5 +42,11 @@ class Admin extends APP_Controller{
 	{
 		$this->renderTemplate("500.twig");
 	}
+	
+	public function renderTemplate($path)
+	{
+		$path = "admin" . DS . "templates" . DS . $path;
+		parent::renderTemplate($path);
+	}
 }
 

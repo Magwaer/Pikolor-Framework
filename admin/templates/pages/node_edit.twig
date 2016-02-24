@@ -1,4 +1,4 @@
-{% extends "layout.twig" %}
+{% extends "admin/templates/layout.twig" %}
 
 {% block stylesheets %}
 	{{ parent() }}
@@ -95,7 +95,7 @@
 								</label>
 							</div>
 							
-							{% import "./helper/form.twig" as form_helper %}
+							{% import "admin/templates/helper/form.twig" as form_helper %}
 							<div class="form-group short-group">
 								<label class="control-label ">Template</label>
 								<select class="bs-select" data-width="100%" name="option[template]" >

@@ -129,6 +129,9 @@ class Custom_fields extends Admin{
 				$instance = new $class;
 				$instance->path = dirname($field['path']);
 				$instance->set_config($this->config);
+				$instance->init_db($this->db);
+				$instance->init_template($this->template); 
+				$instance->set_components($this->components);
 				$instance->init();
 				$instance	->set_data($field);
 				$instance->delete_field($id);
@@ -200,6 +203,9 @@ class Custom_fields extends Admin{
 			$instance = new $class;
 			$instance->path = dirname($field['path']);
 			$instance->set_config($this->config);
+			$instance->init_db($this->db);
+			$instance->init_template($this->template); 
+			$instance->set_components($this->components);
 			$instance->init();
 			$instance	->set_data($field);
 			$instance->delete_field($id);
