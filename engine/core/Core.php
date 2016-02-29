@@ -389,7 +389,7 @@ class pikolor_core {
 				reset($lang_arr);
 				$_SESSION['lang'] = key($lang_arr);
 			}
-
+			
 			$lang = $this->request->location(1);
 			if (!empty($lang) && in_array($lang , array_keys($lang_arr)))
 			{

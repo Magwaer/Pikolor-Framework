@@ -34,8 +34,16 @@ class pikolor_route extends pikolor_core{
 	
 	public function find_route()
 	{
-		$flague = false;
 		$requestUrl = $_SERVER['REQUEST_URI'];
+		
+		$request = new pikolor_request();
+		if ($_SESSION['lang'])
+		{
+			$lang = $request->location(1);
+			if ($lang == $_SESSION['lang'])
+				$requestUrl = str_replace("/" . $lang, "", $requestUrl);
+		}
+		$flague = false;
 		$tmp = explode("?" , $requestUrl);
 		$requestUrl = $tmp[0];
 		$vars = array();
@@ -97,7 +105,6 @@ class pikolor_route extends pikolor_core{
 		
 		if (!$flague)
 		{
-			$request = new pikolor_request();
 			if ($_SESSION['lang'])
 			{
 				$this->action = $request->location(2);
@@ -137,6 +144,13 @@ class pikolor_route extends pikolor_core{
 		}
 		else
 			$url = $path;
+		
+		$request = new pikolor_request();
+		if ($request->location(1) != "admin")
+		{
+			if ($_SESSION['lang'])
+				$url = "/" . $_SESSION['lang'] . $url;
+		}
 		return $url;
 	}
 	

@@ -48,6 +48,7 @@ class pikolor_template extends APP_Controller{
 			$this->set_var("img_path" , "/app/web/img/");
 			$this->set_var("css_path" , "/app/web/css/");
 			$this->set_var("js_path" , "/app/web/js/");
+			$this->set_var("libs_path" , "/app/web/libs/");
 		}
 		
 	}
