@@ -14,7 +14,7 @@ $(document).on("submit", "#login_form", function(){
 
 $(document).ready(function() {     
 	$("input[type=checkbox],input[type=radio]").iCheck({
-		checkboxClass: 'icheckbox_flat-green',
-		radioClass: 'iradio_flat-green'
+		checkboxClass: 'icheckbox_square-green',
+		radioClass: 'iradio_square-green'
 	});
 });
