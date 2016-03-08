@@ -70,6 +70,11 @@ body{
 	display:block;
 	margin:14px 0 17px 15px;
 }
+#sidebar .logo_small{
+	display:none;
+	margin:14px 0 17px 15px;	
+	transition:all 0.4s ease 0s;	
+}
 #sidebar .side_footer{
 	font-size:11px;
 	color:#818a91;
@@ -77,8 +82,9 @@ body{
 	border-top:1px solid rgba(120, 130, 140, 0.13);
 }
 #sidebar .scroll .cap{
-	padding:10px 15px;
+	padding:0 15px 10px ;
 	font-size:13px;
+	transition:all 0.4s ease 0s;
 }
 #sidebar .scroll ul{
 	list-style:none;
@@ -96,6 +102,7 @@ body{
 	color:#0cc2aa ;
 	opacity:0.7;
 	text-shadow:1px 1px 1px #222;
+	width:20px;
 }
 #sidebar .scroll ul li .title{
 	padding:0 0 0 8px;
@@ -117,7 +124,7 @@ body{
 	overflow:hidden;
 }
 #sidebar .scroll ul li .sub-menu li{
-	padding:0 0 0 25px;
+	padding:0 0 0 31px;
 }
 #sidebar .scroll ul li .sub-menu li a{
 	font-weight:normal;
@@ -200,21 +207,44 @@ body{
 
 @media (max-width: 600px){
 	#sidebar{
-		width:36px;
+		width:51px;
 		transition:all 0.4s ease 0s;
+	}
+	#sidebar .logo_small{
+		display:block;
+		margin-left:8px;
+	}
+	#sidebar .logo{
+		display:none;
 	}
 	#sidebar:hover{
-		width:200px;
+		width:250px;
+	}
+	#sidebar .no-scroll{
+		width:280px;
+	}
+	#sidebar .scroll{
+		width:250px;
 	}
 	#sidebar .scroll .cap{
-		padding:10px 15px 10px 40px;
-		transition:all 0.4s ease 0s;
+		padding:10px 15px 10px 51px;
+		font-size:16px;
+	}
+	#sidebar .scroll ul li a{
+		font-size:16px;
+		padding-left:19px;
 	}
 	#sidebar:hover .scroll .cap{
 		padding:10px 15px;
 	}
+	#sidebar .scroll ul li .sub-menu li {
+		padding: 0 0 0 32px;
+	}
 	#sidebar .scroll ul li.active .sub-menu{
 		max-height:0;
+	}
+	#sidebar .scroll ul li .sub-menu li a{
+		font-size:16px;
 	}
 	#sidebar:hover .scroll ul li.active .sub-menu{
 		max-height:500px;
@@ -223,7 +253,7 @@ body{
 		display:none;
 	}
 	#container{
-		padding:60px 0 0 30px
+		padding:60px 0 0 50px;
 	}
 	#content .left_big,#content .small_right{
 		min-width:auto;
