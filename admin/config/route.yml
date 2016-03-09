@@ -157,6 +157,14 @@ role_delete:
 components:
     url: /admin/components
     action: Components:show_components
+	
+component_install:
+    url: /admin/component_install/:component
+    action: Components:install_component
+	
+component_uninstall:
+    url: /admin/component_uninstall/:component
+    action: Components:uninstall_component
 
 component_action:
     url: /admin/component/:component/:class/:action

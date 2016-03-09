@@ -21,7 +21,9 @@ class Components extends Admin{
 		$this->load("models", "Nodes_Model", true);
 		$this->load("models", "Channels_Model", true);
 		$this->load("models", "Fields_Model", true);
+		$this->load("models", "Components_Model", true);
 	}
+	
 	public function show_components()
 	{
 		$components = $this->get_components();
@@ -31,6 +33,16 @@ class Components extends Admin{
 		$this->to_template("page", "components" );
 		$this->to_template("page_title", "Components");
 		$this->renderTemplate("pages/components.twig");
+	}
+	
+	public function install_component($component)
+	{
+		
+	}
+	
+	public function install_uncomponent($component)
+	{
+		
 	}
 	
 	private function get_components()
@@ -43,11 +55,19 @@ class Components extends Admin{
 					if ($file != "." && $file != "..")
 					{
 						if (filetype($dir . $file) == "dir")
-							$components[$file] = $file;
+							$components[$file] = array("title" => $file);
 					}
 				}
 				closedir($dh);
 			}
+		}
+		
+		$db_components = $this->components_model->get_all();
+		foreach($db_components as $c)
+		{
+			$components[$c['label']]['status'] = "installed";
+			$components[$c['label']]['title'] = $c['title'];
+			$components[$c['label']]['desc'] = $c['desc'];
 		}
 		return $components;
 	}

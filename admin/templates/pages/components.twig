@@ -30,9 +30,16 @@
 					<tr style="vertical-align:bottom">
 						<td style="vertical-align:middle"> 
 							{{ comp.title }}
+							{% if comp.desc %}
+							<br /><span class="small_desc">{{ comp.desc }}dd</span>
+							{% endif %}
 						</td>
 						<td class="numeric" style="vertical-align:middle">
-							<span class="label label-sm label-warning">Pending</span>
+							{% if comp.status == 'installed' %}
+							<span class="label label-sm label-success">Installed</span>
+							{% else %}
+							<a href="{{ this.route.generate('component_install', {'component' : comp.label }) }}"  >{{ 'Install now' }}</a>
+							{% endif %}
 						</td>
 						<td class="numeric" style="vertical-align:middle">
 							<div class="btn-group pull-right">
@@ -40,8 +47,11 @@
 									{{ 'Actions' }} <i class="fa fa-angle-down"></i>
 								</button>
 								<ul class="dropdown-menu pull-right" role="menu">
-									<li><a href="{{ this.route.generate('node_edit', {'id' : node.id }) }}"  >{{ 'Edit' }}</a></li>
-									<li><a href="{{ this.route.generate('node_delete', {'id' : node.id }) }}" onclick="return Admin.delete_node($(this))" >{{ 'Remove' }}</a></li>
+									{% if comp.status == 'installed' %}
+									<li><a href="{{ this.route.generate('component_uninstall', {'component' : comp.label }) }}"  >{{ 'Uninstall' }}</a></li>
+									{% else %}
+									<li><a href="{{ this.route.generate('component_install', {'component' : comp.label }) }}"  >{{ 'Install' }}</a></li>
+									{% endif %}
 								</ul>
 							</div>
 						</td>

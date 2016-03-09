@@ -23,6 +23,7 @@ class CMS extends Main_trigger{
 		
 		$this->load("models", "Nodes_Model", true);
 		$this->load("models", "Fields_Model", true);
+		
 		$this->init_cms();
 	}
 	
@@ -60,7 +61,7 @@ class CMS extends Main_trigger{
 	}
 	
 	public function get_node_fields($node)
-	{	
+	{
 		$final = array();
 		$fields = $this->fields_model->get_node_fields($node['id']);
 		foreach($fields as &$field)
@@ -102,7 +103,12 @@ class CMS extends Main_trigger{
 				$s_file = strtolower($file);
 			
 				if ($type == "models")
-					$this->$s_file = new $file($this->db, $this->config);
+				{
+					$instance = new $file($this->db, $this->config);
+					$instance->init_template($this->template); 
+					//$instance->set_components($this->set_components);
+					$this->$s_file = $instance;
+				}
 				else
 					$this->$s_file = new $file();
 			}
