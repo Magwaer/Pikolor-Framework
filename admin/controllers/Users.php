@@ -33,6 +33,17 @@ class Users extends Admin{
 		$this->renderTemplate("pages/user_roles.twig");
 	}
 	
+	public function user_permissions()
+	{
+		$permissions = $this->get_user_permissions();
+		$this->to_template("permissions", $permissions);
+		
+		$this->to_template("page", "user_permissions" );
+		$this->to_template("tab", "users");
+		$this->to_template("page_title", "User permissions");
+		$this->renderTemplate("pages/user_permissions.twig");
+	}
+	
 	public function user_edit($id)
 	{
 		$user = $this->users_model->get_by_id($id);
@@ -104,6 +115,9 @@ class Users extends Admin{
 			die();
 		}
 		
+		$permissions = $this->get_user_permissions();
+		$this->to_template("permissions", $permissions);
+				
 		$this->to_template("role", $role);
 		$this->to_template("page_title", "Edit role");
 		$this->to_template("form_action", $this->route->generate('role_edit', array("id" => $id)));
@@ -151,6 +165,85 @@ class Users extends Admin{
 		$this->route->go("user_roles");
 	}
 	
+	public function permission_edit($id)
+	{
+		$permission = $this->users_model->get_perm_by_id($id);
+		if (!$permission['id'])
+			$this->route->go("error_500");
+		
+		if ($this->request->post('ac') == "edit")
+		{
+			$res = array();
+			$data = $this->request->post("data");
+			if (strlen(trim($data['name'])) < 2)
+				$res['error'] = "Too short permission name";
+			elseif (strlen(trim($data['label'])) < 2)
+				$res['error'] = "Too short label";
+			else
+			{
+				$exists = $this->users_model->get_perm_by_label($data['label']);
+				if (isset($exists['id']) && $exists['id'] != $id)
+					$res['error'] = "This permission label already exists";
+				else
+				{
+					$channel_id = $this->users_model->update_permission($data, $id);
+					$res['location'] = $this->route->generate("user_permissions");
+				}
+			}
+			
+			echo json_encode($res);
+			die();
+		}
+		
+		$this->to_template("perm", $permission);
+		$this->to_template("page_title", "Edit permission");
+		$this->to_template("form_action", $this->route->generate('permission_edit', array("id" => $id)));
+		$this->to_template("action", "edit");
+		$this->renderTemplate("ajax/permission.twig");
+	}
+	
+	public function permission_add()
+	{
+		if ($this->request->post('ac') == "add")
+		{
+			$res = array();
+			$data = $this->request->post("data");
+			if (strlen(trim($data['name'])) < 2)
+				$res['error'] = "Too short permission name";
+			elseif (strlen(trim($data['label'])) < 2)
+				$res['error'] = "Too short label";
+			else
+			{
+				$exists = $this->users_model->get_perm_by_label($data['label']);
+				if (isset($exists['id']))
+					$res['error'] = "This permission label already exists";
+				else
+				{
+					$this->users_model->create_permission($data);
+					$res['location'] = $this->route->generate("user_permissions");
+				}
+			}
+			
+			echo json_encode($res);
+			die();
+		}
+		
+		$this->to_template("page_title", "Add new permission");
+		$this->to_template("form_action", $this->route->generate('permission_add'));
+		$this->to_template("action", "add");
+		$this->renderTemplate("ajax/permission.twig");
+	}
+	
+	public function permission_delete($id)
+	{
+		$role = $this->users_model->get_perm_by_id($id);
+		if (!$role['id'])
+			$this->route->go("error_500");
+		
+		$roles = $this->users_model->delete_permission($id);
+		$this->route->go("user_permissions");
+	}
+	
 	public function get_users()
 	{
 		$users = $this->users_model->get_all();
@@ -161,6 +254,12 @@ class Users extends Admin{
 	{
 		$roles = $this->users_model->get_user_roles();
 		return $roles;
+	}
+	
+	public function get_user_permissions()
+	{
+		$permissions = $this->users_model->get_user_permissions();
+		return $permissions;
 	}
 	
 }

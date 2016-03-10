@@ -1,0 +1,65 @@
+{% extends "admin/templates/layout.twig" %}
+
+{% block stylesheets %}
+	{{ parent() }}
+	
+{% endblock %}
+
+{% block content %}
+	
+	
+	<div class="inner">
+		<div class="big_box">
+			<div class="btn-group pull-right">
+				<button type="button" class="btn btn-fit-height btn-grey dropdown-toggle" dropdown-toggle" data-toggle="dropdown" data-delay="1000" data-close-others="true">
+					{{ 'Actions' }} <i class="fa fa-angle-down"></i>
+				</button>
+				<ul class="dropdown-menu pull-right" role="menu">
+					<li><a href="{{ this.route.generate('permission_add') }}" data-toggle="modal" data-target="#ajax_modal" >New Permission</a></li>
+				</ul>
+			</div>
+			
+			<h3 class="box-title">
+				{{ page_title }}
+			</h3>
+			
+			<!-- END PAGE HEADER-->
+			<table class="table ">
+				<thead class="flip-content">
+					<tr>
+						<th>Perimission</th>
+						<th>Label</th>
+						<th class="numeric" width="100px"> Options </th>
+					</tr>
+				</thead>
+				<tbody>
+				{% for perm in permissions %}
+					<tr style="vertical-align:bottom">
+						<td style="vertical-align:middle"> 
+							<a href="{{ this.route.generate('permission_edit', {'id' : perm.id }) }}" data-toggle="modal" data-target="#ajax_modal" >{{ perm.name }}</a>
+						</td>
+						<td style="vertical-align:middle"> 
+							<a href="{{ this.route.generate('permission_edit', {'id' : perm.id }) }}" data-toggle="modal" data-target="#ajax_modal" >{{ perm.label }}</a>
+						</td>
+						<td class="numeric" style="vertical-align:middle">
+							<div class="btn-group pull-right">
+								<button type="button" class="btn btn-sm btn-blue dropdown-toggle" data-toggle="dropdown" data-delay="1000" data-close-others="true">
+									{{ 'Actions' }} <i class="fa fa-angle-down"></i>
+								</button>
+								<ul class="dropdown-menu pull-right" role="menu">
+									<li><a href="{{ this.route.generate('permission_edit', {'id' : perm.id }) }}" data-toggle="modal" data-target="#ajax_modal" >{{ 'Edit' }}</a></li>
+									<li><a href="{{ this.route.generate('permission_delete', {'id' : perm.id }) }}" onclick="return Admin.delete_node($(this))" >{{ 'Remove' }}</a></li>
+								</ul>
+							</div>
+						</td>
+					</tr>
+				{% endfor %}
+				</tbody>
+			</table>
+		</div>
+	</div>
+{% endblock %}
+
+{% block javascript_bottom %}
+	
+{% endblock %}

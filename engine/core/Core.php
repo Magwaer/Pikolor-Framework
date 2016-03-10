@@ -260,7 +260,7 @@ class pikolor_core {
 					$instance->set_config($this->config);
 					$instance->init_db($this->db); 
 					$instance->init_template($this->template); 
-					$instance->set_components($this->set_components);
+					$instance->set_components($this->components);
 					$instance->init(); 
 				}
 			}

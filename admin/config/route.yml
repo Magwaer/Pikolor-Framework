@@ -150,6 +150,22 @@ role_delete:
     url: /admin/user_roles/role_delete/:id
     action: Users:role_delete
 
+user_permissions:
+    url: /admin/user_permissions
+    action: Users:user_permissions
+
+permission_edit:
+    url: /admin/user_permissions/permission_edit/:id
+    action: Users:permission_edit
+
+permission_add:
+    url: /admin/permission_add
+    action: Users:permission_add
+
+permission_delete:
+    url: /admin/user_permissions/permission_delete/:id
+    action: Users:permission_delete
+
 
 
 # Components

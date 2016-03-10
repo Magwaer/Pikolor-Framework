@@ -7,19 +7,15 @@
 		<form class="form-horizontal ajax_form" action="{{ form_action }}" data-callback="Admin.hide_modal()">
 			<div class="form-body">
 				<div class="form-group">
-					<label class="control-label col-md-3">Role Name</label>
+					<label class="control-label col-md-3">Permission Name</label>
 					<div class="col-md-9">
-						<input type="text" placeholder="" name="data[role]" class="form-control" value="{{ role.role }}">
+						<input type="text" placeholder="" name="data[name]" class="form-control" value="{{ perm.name }}">
 					</div>
 				</div>
 				<div class="form-group">
-					<label class="control-label col-md-3">Permissions</label>
-					<div class="col-md-9" >
-						{% for perm in permissions %}
-						<label>
-							<input type="checkbox" name="data[perm][]" value="{{ perm.id }}" {{ perm.id in role.permissions ? 'checked' : '' }}/> {{ perm.name }} 
-						</label> <br />
-						{% endfor %}
+					<label class="control-label col-md-3">Permission Label</label>
+					<div class="col-md-9">
+						<input type="text" placeholder="" name="data[label]" class="form-control" value="{{ perm.label }}">
 					</div>
 				</div>
 			</div>
@@ -39,6 +35,6 @@
 
 {% block footer %}
 <script>
-	Admin.init_checkbox();
+	Admin.init_select();
 </script>
 {% endblock %}

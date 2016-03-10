@@ -90,6 +90,72 @@ class users_model extends Model{
 	{
 		$roles = $this->db->get("p_roles");
 		return $roles;
+	}	
+	
+	/**
+	* @check if user exists, then set user data in session or/and in cookies
+	* @param string $login
+	* @return void
+	*/
+	public function get_user_permissions()
+	{
+		$permissions = $this->db->get("p_user_permissions");
+		return $permissions;
+	}
+		
+	/**
+	* @check if user exists, then set user data in session or/and in cookies
+	* @param string $login
+	* @return void
+	*/
+	public function get_perm_by_id($id)
+	{
+		$roles = $this->db->where("id", $id)->getOne("p_user_permissions");
+		return $roles;
+	}
+		
+	/**
+	* @check if user exists, then set user data in session or/and in cookies
+	* @param string $login
+	* @return void
+	*/
+	public function get_perm_by_label($id)
+	{
+		$roles = $this->db->where("label", $id)->getOne("p_user_permissions");
+		return $roles;
+	}
+	
+	/**
+	* @check if user exists, then set user data in session or/and in cookies
+	* @param string $login
+	* @return void
+	*/
+	public function create_permission($data)
+	{
+		$res = $this->db->insert("p_user_permissions", $data);
+		return $res;
+	}
+	
+	/**
+	* @check if user exists, then set user data in session or/and in cookies
+	* @param string $login
+	* @return void
+	*/
+	public function update_permission($data, $id)
+	{
+		$res = $this->db->where("id", $id)->update("p_user_permissions", $data);
+		return $res;
+	}
+	
+	/**
+	* @check if user exists, then set user data in session or/and in cookies
+	* @param string $login
+	* @return void
+	*/
+	public function delete_permission($id)
+	{
+		$res = $this->db->where("id", $id)->delete("p_user_permissions");
+		return $res;
 	}
 	
 	/**
@@ -99,8 +165,14 @@ class users_model extends Model{
 	*/
 	public function get_role_by_id($id)
 	{
-		$roles = $this->db->where("id", $id)->getOne("p_roles");
-		return $roles;
+		$role = $this->db->where("id", $id)->getOne("p_roles");
+		$permissions = $this->db->where("role_id", $id)->get("p_role_perm" , null, "perm_id");
+		$role['permissions'] = array();
+		foreach($permissions as $perm)
+		{
+			$role['permissions'][] = $perm['perm_id'];
+		}
+		return $role;
 	}
 	
 	/**
@@ -121,7 +193,18 @@ class users_model extends Model{
 	*/
 	public function update_role($data, $id)
 	{
+		$permissions = $data['perm'];
+		unset($data['perm']);
+		
 		$res = $this->db->where("id", $id)->update("p_roles", $data);
+		if ($res)
+		{
+			$this->db->where("role_id", $id)->delete("p_role_perm");
+			foreach($permissions as $perm)
+			{
+				$this->db->insert("p_role_perm", array("perm_id" => $perm, "role_id" => $id));
+			}
+		}
 		return $res;
 	}
 	
@@ -146,5 +229,6 @@ class users_model extends Model{
 		$res = $this->db->insert("p_roles", $data);
 		return $res;
 	}
+	
 	
 }
