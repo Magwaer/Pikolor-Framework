@@ -16,6 +16,7 @@ class CMS extends Main_trigger{
 	
 	public $node = array();
 	public $fields = array();
+	public $rendered = false;
 	
 	public function init()
 	{
@@ -35,13 +36,17 @@ class CMS extends Main_trigger{
 		$this->to_template($this->node);
 		
 		if (isset($this->node['template']))
+		{
 			$this->renderTemplate($this->node['template']);
+			$this->rendered = true;
+		}
 	}
 	
 	public function find_node()
 	{
 		$this->node = $this->get_node_by_uri();
-		if (!isset($this->node['id']))
+		
+		if (!isset($this->node['id']) && !$this->request->location(1))
 			$this->node = $this->get_home_page();
 		
 		$this->fields = $this->get_node_fields($this->node);

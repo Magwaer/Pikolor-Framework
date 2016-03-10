@@ -27,6 +27,8 @@ class pikolor_core {
 	public $components;
 	public $observer;
 	
+	public $is_admin = false;
+	
 	/*
 	* @the vars array
 	* @access private
@@ -164,7 +166,9 @@ class pikolor_core {
 		error_reporting(E_ALL);
 		ini_set('error_reporting', E_ALL);
 
-		session_start();
+		if(session_id() == '') {
+			session_start();
+		}
 		$_SESSION['time_start_script'] = microtime(true);
 
 		removeMagicQuotes();
@@ -210,9 +214,14 @@ class pikolor_core {
 		
 		$loc_1 = $this->request->location(1);
 		if ($loc_1 == "admin")
-			define('APP_PATH', ROOT . DS . 'admin' . DS );
+		{
+			if (!defined('APP_PATH'))
+				define('APP_PATH', ROOT . DS . 'admin' . DS );
+			$this->is_admin = true;
+		}
 		else
-			define('APP_PATH', ROOT . DS . 'app' . DS );
+			if (!defined('APP_PATH'))
+				define('APP_PATH', ROOT . DS . 'app' . DS );
 		
 		$this->set_lang();
 		
@@ -232,13 +241,16 @@ class pikolor_core {
 	*/
 	function init_app(){
 		$this->route->find_route();
+		$found_action_flague = false;
 		
 		if ($this->route->action) // Searching a controller and a route
 		{
 			$app_class = $this->route->class_name;
 			$app_method = $this->route->method_name;
 			
-			require_once(APP_PATH . "controllers" . DS . $app_class . ".php");
+			$path = realpath(APP_PATH . "controllers" . DS . $app_class . ".php");
+			if (file_exists($path))
+				require_once($path);
 			
 			if (class_exists($app_class))
 			{
@@ -252,6 +264,8 @@ class pikolor_core {
 					$instance->set_components($this->components);
 					$instance->init(); 
 					call_user_func_array(array($instance, $app_method), $this->route->vars);
+					
+					$found_action_flague = true;
 				}
 				else
 				{
@@ -262,22 +276,29 @@ class pikolor_core {
 					$instance->init_template($this->template); 
 					$instance->set_components($this->components);
 					$instance->init(); 
+					
+					$found_action_flague = true;
 				}
 			}
 		}
-		else { // Searching in DB so content
+		if (!$found_action_flague) { // Searching in DB so content
 			$tmp_trigger = explode(":",$this->config['general']['main_trigger']);
 			$class_name = $tmp_trigger[0];
 			$path = realpath(ROOT . DS . $tmp_trigger[1]);
-			require_once($path);
 			
-			$instance = new $class_name;
-			$instance->setObserver($this->observer);
-			$instance->set_config($this->config);
-			$instance->init_db($this->db);
-			$instance->init_template($this->template); 
-			$instance->set_components($this->components);
-			$instance->init(); 
+			if (file_exists($path))
+				require_once($path);
+			
+			if (class_exists($class_name))
+			{
+				$instance = new $class_name;
+				$instance->setObserver($this->observer);
+				$instance->set_config($this->config);
+				$instance->init_db($this->db);
+				$instance->init_template($this->template); 
+				$instance->set_components($this->components);
+				$instance->init(); 
+			}
 		}
 	}
 	
@@ -396,7 +417,8 @@ class pikolor_core {
 				$_SESSION['lang'] = $lang;
 			}
 			
-			define('LANG', $_SESSION['lang']); 
+			if (!defined('LANG'))
+				define('LANG', $_SESSION['lang']); 
 			setcookie("lang", $_SESSION['lang'], time()+3600*24*365, "/");
 		}
 		else

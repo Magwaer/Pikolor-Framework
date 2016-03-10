@@ -19,9 +19,7 @@ class pikolor_template extends APP_Controller{
 	public $twig;
 	public $css_styles = array();
 	public $js_scripts = array();
-	
-	private $id_admin = false;
-	
+		
 	public function init()
 	{
 		
