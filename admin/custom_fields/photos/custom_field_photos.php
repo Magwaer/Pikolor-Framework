@@ -117,10 +117,10 @@ class custom_field_photos extends Custom_field{
 					$name = $photo_id . $ext;
 
 					if (is_uploaded_file($userfile)) {
-						$adr = realpath(ROOT . DS . "upload" . DS . $folder) ;
+						$adr = realpath(ROOT . DS . $folder) ;
 						move_uploaded_file($userfile, $adr . DS . $name);
 
-						$photo = "/upload/" . $folder . "/" . $photo_id . $ext;
+						$photo = $folder . "/" . $photo_id . $ext;
 						$this->photos_model->update(array("path" => $photo), $photo_id);
 					}
 				}
@@ -129,6 +129,12 @@ class custom_field_photos extends Custom_field{
 		$final = array("error" => $error, "msg" => $msg, "photo" => $photo, "id" => $photo_id);
 		echo json_encode($final);
 		die();
+	}
+	
+	public function view_photo($id, $size = array())
+	{
+		$photo = $this->photos_model->get_by_id($id);
+		return "/admin/custom_fields/photos/view_photo.php?w=" . $size['w']. "&h=" . $size['h']. "&img=" . $photo['path'];
 	}
 }
 

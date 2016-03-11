@@ -251,7 +251,6 @@ class pikolor_core {
 			$path = realpath(APP_PATH . "controllers" . DS . $app_class . ".php");
 			if (file_exists($path))
 				require_once($path);
-			
 			if (class_exists($app_class))
 			{
 				if (method_exists($app_class , $app_method))
