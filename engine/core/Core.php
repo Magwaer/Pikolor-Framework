@@ -143,7 +143,10 @@ class pikolor_core {
 		
 		$loc_1 = $this->request->location(1);
 		if ($loc_1 == "admin")
+		{
 			define('APP_PATH', ROOT . DS . 'admin' . DS );
+			$this->is_admin = true;
+		}
 		else
 			define('APP_PATH', ROOT . DS . 'app' . DS );
 		
@@ -303,7 +306,13 @@ class pikolor_core {
 	
 	public function init()
 	{
-		
+		if (!$this->request )
+			$this->request = new pikolor_request();
+		$loc_1 = $this->request->location(1);
+		if ($loc_1 == "admin")
+		{
+			$this->is_admin = true;
+		}
 	}
 	
 	/**

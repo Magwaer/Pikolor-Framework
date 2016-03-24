@@ -55,6 +55,8 @@ class Custom_field extends APP_Controller{
 	public function get_field_value()
 	{
 		$data = $this->get_data();
+		if (!isset($data['value']))
+			return;
 		if ($data['multilang'])
 			return $data['value'][$_SESSION['lang']];
 		else

@@ -46,7 +46,12 @@ class CMS extends Main_trigger{
 	{
 		$this->node = $this->get_node_by_uri();
 		
-		if (!isset($this->node['id']) && !$this->request->location(1))
+		if($this->is_multilang)
+			$loc_1 = $this->request->location(2);
+		else
+			$loc_1 = $this->request->location(1);
+		
+		if (!isset($this->node['id']) && !$loc_1)
 			$this->node = $this->get_home_page();
 		
 		$this->fields = $this->get_node_fields($this->node);

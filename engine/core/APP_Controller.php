@@ -36,6 +36,7 @@ class APP_Controller extends pikolor_core{
 	{
 		if (!$this->is_init)
 		{
+			parent::init();
 			$this->is_init = true;
 			
 			$this->request = new pikolor_request();
