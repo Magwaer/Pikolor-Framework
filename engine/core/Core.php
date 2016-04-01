@@ -282,8 +282,10 @@ class pikolor_core {
 					$found_action_flague = true;
 				}
 			}
+			
 		}
 		if (!$found_action_flague) { // Searching in DB so content
+			
 			$tmp_trigger = explode(":",$this->config['general']['main_trigger']);
 			$class_name = $tmp_trigger[0];
 			$path = realpath(ROOT . DS . $tmp_trigger[1]);
