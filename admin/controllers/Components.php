@@ -84,7 +84,10 @@ class Components extends Admin{
 				
 		call_user_func_array(array($instance, $action), array());
 		$this->template->vars = array_merge($instance->template->vars, $this->template->vars);
-		$this->renderTemplate("pages/component.twig");
+		if (!isset($this->template->vars['no_render_main']) or !$this->template->vars['no_render_main'])
+			$this->renderTemplate("pages/component.twig");
+		else
+			echo $this->template->vars['component_content'];
 	}
 	
 
