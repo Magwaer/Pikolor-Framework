@@ -65,6 +65,11 @@ if (file_exists($sourceImage)){
             break;
     }
     $thumb = imagecreatetruecolor($w, $h);
+
+	$black = imagecolorallocate($thumb, 0, 0, 0);
+	// Make the background transparent
+	imagecolortransparent($thumb, $black);
+
     imagealphablending($thumb, false);
     // Create a new transparent color for image
     $color = imagecolorallocatealpha($thumb, 255, 255,255, 127);
@@ -79,8 +84,8 @@ if (file_exists($sourceImage)){
     imagecopyresampled($thumb, $image, $x, $y, 0, 0, $newWidth, $newHeight, $imageSize[0], $imageSize[1]);
 
     Header ('Content-type: image/jpeg');
-	imagejpeg($thumb, $adr);
-    imagejpeg($thumb);
+	imagepng($thumb, $adr);
+    imagepng($thumb);
     imagedestroy($image);
     imagedestroy($thumb);
 }
