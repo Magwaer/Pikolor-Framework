@@ -27,6 +27,7 @@ class APP_Controller extends pikolor_core{
 	
 	public $lang_keys = array();
 	public $langs = array();
+	public $lang = "";
 	public $is_multilang = false;
 	
 	/**
@@ -55,6 +56,7 @@ class APP_Controller extends pikolor_core{
 				$this->lang_keys = array_keys($this->config['general']['langs']);
 				$this->langs = $this->config['general']['langs'];
 				$this->to_template("langs", $this->langs);
+				$this->lang = $_SESSION['lang'];
 			}
 			else
 				$this->is_multilang = false;
