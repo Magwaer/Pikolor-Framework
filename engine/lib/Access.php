@@ -38,7 +38,7 @@ class Access extends Model{
 		if ($this->use_password)
 		{
 			$pass = $this->encrypt($password);
-			$user = $this->db->where($this->login_by, $login)->where("password", $pass)->getOne("p_users U", "U.*, R.role");
+			$user = $this->db->where($this->login_by, $login)->where("password", $pass)->getOne("p_users U", "U.*, R.role, R.id as role_id ");
 		}
 		else
 		{
@@ -54,6 +54,13 @@ class Access extends Model{
 				{
 					setcookie("password", $pass, time()+60*60*24*21);
 				}
+			}
+			$this->db->join("p_user_permissions UP", "UP.id=RP.perm_id", "LEFT");
+			$user['permissions'] = array();
+			$tmp = $this->db->where("RP.role_id", $user['role_id'])->get("p_role_perm RP",null, "UP.label");
+			foreach($tmp as $perm)
+			{
+				$user['permissions'][] = $perm['label'];
 			}
 			$_SESSION['access_user'] = $user;
 			return true;
@@ -227,6 +234,14 @@ class Access extends Model{
 	
 		
 		return $flague;
+	}
+
+	function has_permission($perm)
+	{
+		$permissions = $_SESSION['access_user']['permissions'];
+		if (in_array($perm, $permissions))
+			return true;
+		return false;
 	}
 	
 	function admin_access($role = "ADMIN")
