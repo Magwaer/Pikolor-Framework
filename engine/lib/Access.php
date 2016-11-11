@@ -115,8 +115,8 @@ class Access extends Model{
 	* @logout an user
 	*/
 	public function logout(){
-		setcookie("username", "", time()+60*60*24*7);
-		setcookie("password", "", time()+60*60*24*7);
+		setcookie("username", "", time()+60*60*24*7, "/");
+		setcookie("password", "", time()+60*60*24*7, "/");
 		$_SESSION['access_user'] = null;
 	}
 	
