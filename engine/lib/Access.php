@@ -210,7 +210,7 @@ class Access extends Model{
 	{
 		$flague = false;
 		
-		$user_roles = $_SESSION['access_user']['roles'];
+		$user_roles = $_SESSION['access_user']['role'];
 		$roles_arr = explode(";" , $user_roles);
 		if (is_array($roles))
 		{
