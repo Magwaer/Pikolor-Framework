@@ -136,6 +136,13 @@ class custom_field_photos extends Custom_field{
 		$photo = $this->photos_model->get_by_id($id);
 		return "/admin/custom_fields/photos/view_photo.php?w=" . $size['w']. "&h=" . $size['h']. "&img=" . $photo['path'];
 	}
+	
+	public function get_photo($id)
+	{
+		$photo = $this->photos_model->get_by_id($id);
+		return $photo;
+	}
+	
 }
 
 
