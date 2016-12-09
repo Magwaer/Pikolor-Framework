@@ -362,24 +362,3 @@ a img{
 .clear{
 	clear:both;
 }
-.order-status-new {
-	background-color: rgba(245, 222, 179, 0.5);
-}
-.order-status-procesed {
-	background-color: rgba(205, 133, 63, 0.5);
-}
-.order-status-to-warehouse {
-	background-color: rgba(128, 128, 0, 0.5);
-}
-.order-status-ready-to-ship {
-	background-color: rgba(139, 69, 19, 0.5);
-}
-.order-status-in-way {
-	background-color: rgba(0, 128, 128, 0.5);
-}
-.order-status-delivered {
-	background-color: rgba(34, 139, 34, 0.5);
-}
-.order-status-canceled {
-	background-color: rgba(128, 0, 0, 0.5);
-}
