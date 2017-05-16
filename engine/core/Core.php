@@ -323,20 +323,25 @@ class pikolor_core {
 	*/
 	function init_components() {
 		$components = $this->db->get("p_components");
+		if (!is_array($this->components))
+			$this->components = (object) array();
 		foreach($components as &$component)
 		{
 			$path = realpath(ROOT . DS . "components" . DS . $component['label'] . DS . $component['label'] . ".php");
 			require_once($path);
 			
-			$instance = new $component['label'];
-			$instance->label = $component['label'];
-			$instance->setObserver($this->observer);
-			$instance->set_config($this->config);
-			$instance->init_db($this->db);
-			$instance->init_template($this->template); 
-			$instance->set_components($this->components);
-			$instance->init(); 
-			$this->components->$component['label'] = $instance;
+			if (class_exists($component['label']))
+			{
+				$instance = new $component['label'];
+				$instance->label = $component['label'];
+				$instance->setObserver($this->observer);
+				$instance->set_config($this->config);
+				$instance->init_db($this->db);
+				$instance->init_template($this->template); 
+				$instance->set_components($this->components);
+				$instance->init(); 
+				$this->components->$component['label'] = $instance;
+			}
 		}
 	}
 	

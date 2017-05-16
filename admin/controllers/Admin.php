@@ -23,7 +23,7 @@ class Admin extends APP_Controller{
 			
 		$this->to_template("is_multilang", $this->is_multilang );
 		
-		if ($this->access->is_locked && $this->request->location(2) != "lock")
+		if ($this->access->is_locked && $this->request->location(2) != "locked")
 			$this->route->go("lock_screen");
 		
 		if (!$this->access->is_logged() && $this->request->location(2) != "login")

@@ -6,7 +6,8 @@
 		<div class="new_request_image_block">
 			<img class="new_request_image_block_image" src="{{ photo.path }}"/>
 			<input type="hidden" value="{{ photo.id }}" name="data[{{ label }}][]">
-			<a onclick="delete_file({{ photo.id }} , $(this)  , '{{ label }}'); return false" class="new_request_image_delete" href="#">delete</a>
+			<a onclick="delete_file({{ photo.id }} , $(this)  , '{{ label }}'); return false" class="new_request_image_delete" href="#">delete</a> <br />
+			<a onclick="edit_photo('{{ photo.path }}' , {{ photo.id }} , $(this))  ; return false" class="new_request_image_delete edit_img" href="#">Edit</a>
 		</div>
 		{% endfor %}
 		
@@ -20,3 +21,4 @@
 	<span class="help-block">{{ info }}</span>
 	{% endif %}
 </div>
+

@@ -80,7 +80,7 @@ class nodes_model extends Model{
 		{
 			$langs = array_keys($this->config['general']['langs']);
 		}
-		$this->db->join("p_node_fields f", "f.node_id=n.id and f.label = 'title' " . ($this->is_multilang ? " and f.lang = '" . $langs[0] ."'": "") , "LEFT");
+		$this->db->join("p_node_fields f", "f.node_id=n.id and f.label = 'title' " . ($this->is_multilang ? " and f.lang = '" . $_SESSION['lang'] ."'": "") , "LEFT");
 		$node = $this->db->where("uri", $uri)->getOne("p_nodes n", "n.* , f.value as title");
 		return $node;
 	}
@@ -91,7 +91,7 @@ class nodes_model extends Model{
 		{
 			$langs = array_keys($this->config['general']['langs']);
 		}
-		$this->db->join("p_node_fields f", "f.node_id=n.id and f.label = 'title' " . ($this->is_multilang ? " and f.lang = '" . $langs[0] ."'": "") , "LEFT");
+		$this->db->join("p_node_fields f", "f.node_id=n.id and f.label = 'title' " . ($this->is_multilang ? " and f.lang = '" . $_SESSION['lang'] ."'": "") , "LEFT");
 		$node = $this->db->where("home_page", 1)->getOne("p_nodes n", "n.* , f.value as title");
 		return $node;
 	}

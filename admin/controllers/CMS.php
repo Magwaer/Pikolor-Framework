@@ -37,6 +37,23 @@ class CMS extends Main_trigger{
 		
 		if (isset($this->node['template']))
 		{
+			$controller = str_replace(array(".twig", "/app/templates/"), "", $this->node['template']);
+			$controller_path = APP_PATH . "controllers" . DS . $controller . ".php";
+			if (file_exists($controller_path))
+			{
+				require_once($controller_path);
+				if (class_exists($controller))
+				{
+					$instance = new $controller;
+					$instance->setObserver($this->observer);
+					$instance->set_config($this->config);
+					$instance->init_db($this->db); 
+					$instance->init_template($this->template); 
+					$instance->set_components($this->components);
+					$instance->init(); 
+				}
+			}
+			
 			$this->renderTemplate($this->node['template']);
 			$this->rendered = true;
 		}
@@ -60,6 +77,9 @@ class CMS extends Main_trigger{
 	public function get_node_by_uri()
 	{
 		$url = $this->request->uri;
+		if($this->is_multilang)
+			$url = str_replace("/" . LANG , "", $url);
+		
 		$node = $this->nodes_model->search_by_link($url);
 		return $node;
 	}

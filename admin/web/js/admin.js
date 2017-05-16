@@ -22,7 +22,17 @@ var Admin = {
 	{
 		tinymce.init({ 
 			selector:'.rich_textarea' ,
-			menubar: false,
+			plugins: [
+			"advlist autolink autosave link image lists charmap print preview hr anchor pagebreak spellchecker",
+			"searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime media nonbreaking",
+			"table contextmenu directionality emoticons template textcolor paste fullpage textcolor colorpicker textpattern"
+		  ],
+
+		  toolbar1: " bold italic underline strikethrough | alignleft aligncenter alignright alignjustify | styleselect formatselect fontselect fontsizeselect | table | removeformat  | forecolor backcolor",
+		  toolbar2: " searchreplace | bullist numlist | outdent indent blockquote | undo redo | link unlink  image media code ",
+		  
+		  menubar: false,
+		  toolbar_items_size: 'small',
 		});
 	},
 	

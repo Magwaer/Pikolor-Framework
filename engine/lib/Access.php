@@ -19,7 +19,7 @@ class Access extends Model{
 	
 	public function __construct($db, $config)
 	{
-		$this->check_cookies();
+		//$this->check_cookies();
 		parent::__construct($db, $config);
 	}
 	
@@ -49,10 +49,10 @@ class Access extends Model{
 		{
 			if ($remember)
 			{
-				setcookie("username", $login, time()+60*60*24*150);
+				setcookie("username", $login, time()+60*60*24*150 , "/");
 				if ($this->use_password)
 				{
-					setcookie("password", $pass, time()+60*60*24*21);
+					setcookie("password", $pass, time()+60*60*24*150, "/");
 				}
 			}
 			$this->db->join("p_user_permissions UP", "UP.id=RP.perm_id", "LEFT");
@@ -63,6 +63,7 @@ class Access extends Model{
 				$user['permissions'][] = $perm['label'];
 			}
 			$_SESSION['access_user'] = $user;
+			
 			return true;
 		}
 		else 
@@ -94,10 +95,10 @@ class Access extends Model{
 				$user = $this->db->where("id", $user_id)->getOne("p_users");
 				if ($remember)
 				{
-					setcookie("username", $data[$this->login_by], time()+60*60*24*7);
+					setcookie("username", $data[$this->login_by], time()+60*60*24*150 , "/");
 					if ($this->use_password)
 					{
-						setcookie("password", $data['password'], time()+60*60*24*7);
+						setcookie("password", $data['password'], time()+60*60*24*150 , "/");
 					}
 				}
 				$_SESSION['access_user'] = $user;
@@ -125,28 +126,40 @@ class Access extends Model{
 	*/
 	public function check_cookies()
 	{
+		if (isset($_SESSION['access_user']['id']))
+			return true;
 		$username = isset($_COOKIE['username']) ? $_COOKIE['username'] : "";
 		$password = isset($_COOKIE['password']) ? $_COOKIE['password'] : "";
-		
 		if (strlen($username))
 		{
 			if ($this->use_password && !strlen($password))
+			{
 				$this->is_locked = true;
-			return;
+				return;
+			}
 			
+			$this->db->join("p_user_roles UR", "UR.user_id=U.id", "LEFT");
+			$this->db->join("p_roles R", "UR.role_id=R.id", "LEFT");
 			if ($this->use_password)
 			{
-				$pass = $this->encrypt($password);
-				$user = $this->db->where($this->login_by, $username)->where("password", $pass)->getOne("p_users");
+				$user = $this->db->where($this->login_by, $username)->where("password", $password)->getOne("p_users U", "U.*, R.role, R.id as role_id ");
 			}
 			else
 			{
-				$user = $this->db->where($this->login_by, $username)->getOne("p_users");
+				$user = $this->db->where($this->login_by, $username)->getOne("p_users U", "U.*, R.role");
 			}
 			
-			if (isset($user['id']))
+			if ($user['id'])
 			{
+				$this->db->join("p_user_permissions UP", "UP.id=RP.perm_id", "LEFT");
+				$user['permissions'] = array();
+				$tmp = $this->db->where("RP.role_id", $user['role_id'])->get("p_role_perm RP",null, "UP.label");
+				foreach($tmp as $perm)
+				{
+					$user['permissions'][] = $perm['label'];
+				}
 				$_SESSION['access_user'] = $user;
+				return true;
 			}
 		}
 	}
@@ -200,6 +213,8 @@ class Access extends Model{
 	
 	public function is_logged()
 	{
+		$this->check_cookies();
+
 		if (isset($_SESSION['access_user']['id']) && $_SESSION['access_user']['id'] > 0)
 			return true;
 		else

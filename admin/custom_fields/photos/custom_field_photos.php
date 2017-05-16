@@ -23,6 +23,9 @@ class custom_field_photos extends Custom_field{
 		$this->add_js("/admin/custom_fields/photos/js/ajax_uploading.js" , "ajax_uploading");
 		$this->add_js("/admin/custom_fields/photos/js/photos.js" , "photos_field");
 		
+		$this->add_js("/admin/custom_fields/photos/js/cropperjs/cropper.js");
+		$this->add_css("/admin/custom_fields/photos/js/cropperjs/cropper.css");
+		
 		$this->load("models", "photos_model", true);
 	}
 	
@@ -141,6 +144,11 @@ class custom_field_photos extends Custom_field{
 	{
 		$photo = $this->photos_model->get_by_id($id);
 		return $photo;
+	}
+	
+	public function update_path($path, $id)
+	{
+		$this->photos_model->update(array("path" => $path), $id);
 	}
 	
 }
